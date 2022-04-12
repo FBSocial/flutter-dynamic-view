@@ -5,22 +5,28 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Widget;
 import 'package:json_annotation/json_annotation.dart';
 
+import 'base_widgets.dart';
+
 part 'layouts.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Expanded extends SingleChildWidget {
-  Expanded(Widget child) : super(WidgetTag.expanded, child);
+@DoubleConverter()
+class ExpandedData extends SingleChildWidget {
+  final int? flex;
 
-  factory Expanded.fromJson(Map<String, dynamic> json) =>
-      _$ExpandedFromJson(json);
+  ExpandedData({this.flex, required WidgetData child})
+      : super(WidgetTag.expanded, child: child);
+
+  factory ExpandedData.fromJson(Map<String, dynamic> json) =>
+      _$ExpandedDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ExpandedToJson(this);
+  Map<String, dynamic> toJson() => _$ExpandedDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Expanded && child == other.child;
+    return other is ExpandedData && child == other.child;
   }
 
   @override
@@ -30,21 +36,25 @@ class Expanded extends SingleChildWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Flexible extends SingleChildWidget {
-  final double? flex;
+@DoubleConverter()
+class FlexibleData extends SingleChildWidget {
+  final int? flex;
 
-  Flexible(Widget child, this.flex) : super(WidgetTag.flexible, child);
+  FlexibleData({
+    required WidgetData child,
+    this.flex,
+  }) : super(WidgetTag.flexible, child: child);
 
-  factory Flexible.fromJson(Map<String, dynamic> json) =>
-      _$FlexibleFromJson(json);
+  factory FlexibleData.fromJson(Map<String, dynamic> json) =>
+      _$FlexibleDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$FlexibleToJson(this);
+  Map<String, dynamic> toJson() => _$FlexibleDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Flexible && flex == other.flex && child == other.child;
+    return other is FlexibleData && flex == other.flex && child == other.child;
   }
 
   @override
@@ -53,17 +63,22 @@ class Flexible extends SingleChildWidget {
   }
 }
 
-@JsonSerializable(
-    explicitToJson: true, includeIfNull: false, createFactory: false)
-class Spacer extends Widget {
-  Spacer() : super(WidgetTag.spacer);
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
+class SpacerData extends WidgetData {
+  int? flex;
+
+  SpacerData({this.flex}) : super(WidgetTag.spacer);
+
+  factory SpacerData.fromJson(Map<String, dynamic> json) =>
+      _$SpacerDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$SpacerToJson(this);
+  Map<String, dynamic> toJson() => _$SpacerDataToJson(this);
 
   @override
   bool operator ==(Object other) {
-    return other is Spacer;
+    return other is SpacerData;
   }
 
   @override
@@ -73,27 +88,35 @@ class Spacer extends Widget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Row extends MultiChildrenWidget {
+@DoubleConverter()
+class RowData extends MultiChildrenWidget {
+  @JsonKey(name: "hAlign")
   final MainAxisAlignment? mainAxisAlignment;
+  @JsonKey(name: "size")
   final MainAxisSize? mainAxisSize;
+  @JsonKey(name: "vAlign")
   final CrossAxisAlignment? crossAxisAlignment;
 
-  Row({
+  RowData({
     this.mainAxisAlignment,
     this.mainAxisSize,
     this.crossAxisAlignment,
-    required List<Widget> children,
-  }) : super(WidgetTag.row, children: children);
+    TextStyleData? textStyle,
+    EdgeInsets? padding,
+    required List<WidgetData> children,
+  }) : super(WidgetTag.row,
+            children: children, padding: padding, textStyle: textStyle);
 
-  factory Row.fromJson(Map<String, dynamic> json) => _$RowFromJson(json);
+  factory RowData.fromJson(Map<String, dynamic> json) =>
+      _$RowDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$RowToJson(this);
+  Map<String, dynamic> toJson() => _$RowDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Row &&
+    return other is RowData &&
         mainAxisAlignment == other.mainAxisAlignment &&
         mainAxisSize == other.mainAxisSize &&
         crossAxisAlignment == other.crossAxisAlignment &&
@@ -107,27 +130,35 @@ class Row extends MultiChildrenWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Column extends MultiChildrenWidget {
+@DoubleConverter()
+class ColumnData extends MultiChildrenWidget {
+  @JsonKey(name: "vAlign")
   final MainAxisAlignment? mainAxisAlignment;
+  @JsonKey(name: "size")
   final MainAxisSize? mainAxisSize;
+  @JsonKey(name: "hAlign")
   final CrossAxisAlignment? crossAxisAlignment;
 
-  Column({
+  ColumnData({
     this.mainAxisAlignment,
     this.mainAxisSize,
     this.crossAxisAlignment,
-    required List<Widget> children,
-  }) : super(WidgetTag.column, children: children);
+    EdgeInsets? padding,
+    TextStyleData? textStyle,
+    required List<WidgetData> children,
+  }) : super(WidgetTag.column,
+            children: children, padding: padding, textStyle: textStyle);
 
-  factory Column.fromJson(Map<String, dynamic> json) => _$ColumnFromJson(json);
+  factory ColumnData.fromJson(Map<String, dynamic> json) =>
+      _$ColumnDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ColumnToJson(this);
+  Map<String, dynamic> toJson() => _$ColumnDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Column &&
+    return other is ColumnData &&
         mainAxisAlignment == other.mainAxisAlignment &&
         mainAxisSize == other.mainAxisSize &&
         crossAxisAlignment == other.crossAxisAlignment &&
@@ -141,7 +172,8 @@ class Column extends MultiChildrenWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Positioned extends SingleChildWidget {
+@DoubleConverter()
+class PositionedData extends SingleChildWidget {
   final double? top;
   final double? right;
   final double? bottom;
@@ -149,26 +181,26 @@ class Positioned extends SingleChildWidget {
   final double? width;
   final double? height;
 
-  Positioned(
-    Widget child, {
+  PositionedData({
+    required WidgetData child,
     this.top,
     this.right,
     this.bottom,
     this.left,
     this.width,
     this.height,
-  }) : super(WidgetTag.positioned, child);
+  }) : super(WidgetTag.positioned, child: child);
 
-  factory Positioned.fromJson(Map<String, dynamic> json) =>
-      _$PositionedFromJson(json);
+  factory PositionedData.fromJson(Map<String, dynamic> json) =>
+      _$PositionedDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$PositionedToJson(this);
+  Map<String, dynamic> toJson() => _$PositionedDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Positioned &&
+    return other is PositionedData &&
         top == other.top &&
         right == other.right &&
         bottom == other.bottom &&
@@ -185,24 +217,29 @@ class Positioned extends SingleChildWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
 @AlignmentJsonConverter()
-class Stack extends MultiChildrenWidget {
+class StackData extends MultiChildrenWidget {
   final Alignment? alignment;
 
-  Stack({
+  StackData({
     this.alignment,
-    required List<Widget> children,
-  }) : super(WidgetTag.stack, children: children);
+    required List<WidgetData> children,
+    EdgeInsets? padding,
+    TextStyleData? textStyle,
+  }) : super(WidgetTag.stack,
+            children: children, padding: padding, textStyle: textStyle);
 
-  factory Stack.fromJson(Map<String, dynamic> json) => _$StackFromJson(json);
+  factory StackData.fromJson(Map<String, dynamic> json) =>
+      _$StackDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$StackToJson(this);
+  Map<String, dynamic> toJson() => _$StackDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Stack &&
+    return other is StackData &&
         alignment == other.alignment &&
         listEquals(children, other.children);
   }
@@ -210,5 +247,52 @@ class Stack extends MultiChildrenWidget {
   @override
   String toString() {
     return 'Stack{alignment: $alignment, children: $children}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
+class GridViewData extends MultiChildrenWidget {
+  final Axis? scrollDirection;
+  final int crossAxisCount;
+  final double? mainAxisSpacing;
+  final double? crossAxisSpacing;
+  final double? childAspectRatio;
+  final bool? shrikWrap;
+
+  GridViewData({
+    required this.crossAxisCount,
+    this.scrollDirection,
+    this.mainAxisSpacing,
+    this.crossAxisSpacing,
+    this.childAspectRatio,
+    this.shrikWrap,
+    EdgeInsets? padding,
+    TextStyleData? textStyle,
+    required List<WidgetData> children,
+  }) : super(WidgetTag.gridView,
+            children: children, padding: padding, textStyle: textStyle);
+
+  factory GridViewData.fromJson(Map<String, dynamic> json) =>
+      _$GridViewDataFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$GridViewDataToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is GridViewData &&
+        scrollDirection == other.scrollDirection &&
+        crossAxisCount == other.crossAxisCount &&
+        mainAxisSpacing == other.mainAxisSpacing &&
+        crossAxisSpacing == other.crossAxisSpacing &&
+        childAspectRatio == other.childAspectRatio &&
+        listEquals(children, other.children);
+  }
+
+  @override
+  String toString() {
+    return 'GridView{scrollDirection: $scrollDirection, crossAxisCount: $crossAxisCount, mainAxisSpacing: $mainAxisSpacing, crossAxisSpacing: $crossAxisSpacing, childAspectRatio: $childAspectRatio, children: $children}';
   }
 }

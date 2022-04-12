@@ -12,16 +12,20 @@ import 'package:flutter/material.dart'
         Column;
 import 'package:json_annotation/json_annotation.dart';
 
+import 'advance_widgets.dart';
 import 'base_widgets.dart';
+import 'helper.dart';
 import 'layouts.dart';
 
 part 'widgets.g.dart';
 
 enum WidgetTag {
   // base widgets
+  aspectRatio,
   text,
   image,
   button,
+  divider,
   container,
   // layout helpers
   expanded,
@@ -29,59 +33,86 @@ enum WidgetTag {
   spacer,
   positioned,
   // layouts
+  gridView,
   row,
   column,
   stack,
+  // advance
+  markdown,
+  // userAvatar,
+  // userName,
 }
 
 @JsonSerializable(createFactory: false)
-abstract class Widget {
+@DoubleConverter()
+abstract class WidgetData {
   WidgetTag tag;
+  @JsonKey(fromJson: edgeInsetsFromJson, toJson: edgeInsetsToJson)
+  EdgeInsets? padding;
 
-  Widget(this.tag);
+  WidgetData(this.tag, {this.padding});
 
-  factory Widget.fromJson(Map<String, dynamic> json) {
+  factory WidgetData.fromJson(Map<String, dynamic> json) {
     final tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
 
     switch (tag) {
+      case WidgetTag.aspectRatio:
+        return AspectRatioData.fromJson(json);
       case WidgetTag.text:
-        return Text.fromJson(json);
+        return TextData.fromJson(json);
       case WidgetTag.image:
-        return Image.fromJson(json);
+        return ImageData.fromJson(json);
       case WidgetTag.button:
-        return Button.fromJson(json);
+        return ButtonData.fromJson(json);
       case WidgetTag.container:
-        return Container.fromJson(json);
+        return ContainerData.fromJson(json);
+      case WidgetTag.divider:
+        return DividerData.fromJson(json);
       case WidgetTag.expanded:
-        return Expanded.fromJson(json);
+        return ExpandedData.fromJson(json);
       case WidgetTag.flexible:
-        return Flexible.fromJson(json);
+        return FlexibleData.fromJson(json);
       case WidgetTag.spacer:
-        return Spacer();
+        return SpacerData.fromJson(json);
       case WidgetTag.positioned:
-        return Positioned.fromJson(json);
+        return PositionedData.fromJson(json);
       case WidgetTag.row:
-        return Row.fromJson(json);
+        return RowData.fromJson(json);
       case WidgetTag.column:
-        return Column.fromJson(json);
+        return ColumnData.fromJson(json);
       case WidgetTag.stack:
-        return Stack.fromJson(json);
+        return StackData.fromJson(json);
+      case WidgetTag.gridView:
+        return GridViewData.fromJson(json);
+      case WidgetTag.markdown:
+        return MarkdownData.fromJson(json);
+      // case WidgetTag.userAvatar:
+      //   return UserAvatarData.fromJson(json);
+      // case WidgetTag.userName:
+      //   return UserNameData.fromJson(json);
     }
   }
 
   Map<String, dynamic> toJson();
 }
 
-abstract class SingleChildWidget extends Widget {
-  Widget? child;
+abstract class SingleChildWidget extends WidgetData {
+  WidgetData? child;
 
-  SingleChildWidget(WidgetTag tag, this.child) : super(tag);
+  SingleChildWidget(WidgetTag tag, {this.child, EdgeInsets? padding})
+      : super(tag, padding: padding);
 }
 
-abstract class MultiChildrenWidget extends Widget {
-  List<Widget> children;
+abstract class MultiChildrenWidget extends WidgetData {
+  List<WidgetData> children;
+  TextStyleData? textStyle;
 
-  MultiChildrenWidget(WidgetTag tag, {required this.children}) : super(tag);
+  MultiChildrenWidget(
+    WidgetTag tag, {
+    required this.children,
+    this.textStyle,
+    EdgeInsets? padding,
+  }) : super(tag, padding: padding);
 }
 
 // Json Convert ---------------------------------------------------------------
@@ -99,6 +130,7 @@ class ColorJsonConverter extends JsonConverter<Color?, String?> {
     if (json.length == 8) {
       return Color(int.parse('0x$json'));
     }
+    return null;
   }
 
   @override
@@ -113,39 +145,112 @@ class ColorJsonConverter extends JsonConverter<Color?, String?> {
   }
 }
 
-class AlignmentJsonConverter
-    extends JsonConverter<Alignment?, Map<String, double>?> {
+class AlignmentJsonConverter extends JsonConverter<Alignment?, String?> {
   const AlignmentJsonConverter();
 
   @override
-  Alignment? fromJson(Map<String, dynamic>? json) {
+  Alignment? fromJson(String? json) {
     if (json == null) return null;
-    return Alignment(json['x'] as double, json['y'] as double);
+    final values = json.split(',');
+    if (values.length == 1) {
+      final val = double.parse(values.single);
+      return Alignment(val, val);
+    }
+
+    return Alignment(double.parse(values.first), double.parse(values.last));
   }
 
   @override
-  Map<String, double>? toJson(Alignment? object) {
+  String? toJson(Alignment? object) {
     if (object == null) return null;
-    return {'x': object.x, 'y': object.y};
+    if (object.x == object.y) {
+      return object.x.toString();
+    } else {
+      return '${double2str(object.x)},${double2str(object.y)}';
+    }
   }
 }
 
-class RectJsonConverter extends JsonConverter<Rect?, Map<String, double>> {
+class RectJsonConverter extends JsonConverter<Rect?, String?> {
   const RectJsonConverter();
 
   @override
-  Rect fromJson(Map<String, dynamic> json) {
-    return Rect.fromLTWH(json['left'] as double, json['top'] as double,
-        json['width'] as double, json['height'] as double);
+  Rect? fromJson(String? json) {
+    if (json == null) return null;
+    final values = json.split(',');
+
+    return Rect.fromLTWH(
+      double.parse(values[0]),
+      double.parse(values[1]),
+      double.parse(values[2]),
+      double.parse(values[3]),
+    );
   }
 
   @override
-  Map<String, double> toJson(Rect? object) {
-    return {
-      'left': object!.left,
-      'top': object.top,
-      'width': object.width,
-      'height': object.height
-    };
+  String? toJson(Rect? object) {
+    if (object == null) return null;
+    return '${double2str(object.left)},${double2str(object.top)},${double2str(object.width)},${double2str(object.height)}';
+  }
+}
+
+EdgeInsets? edgeInsetsFromJson(String? json) {
+  if (json == null || json.isEmpty) return null;
+  final arr = json.split(",").map((e) => double.parse(e)).toList();
+  if (arr.length == 1) {
+    return EdgeInsets.all(arr.single);
+  }
+  if (arr.length == 2) {
+    return EdgeInsets.symmetric(vertical: arr.first, horizontal: arr.last);
+  }
+  if (arr.length == 4) {
+    return EdgeInsets.fromLTRB(arr[0], arr[1], arr[2], arr[3]);
+  }
+  return null;
+}
+
+String? edgeInsetsToJson(EdgeInsets? object) {
+  if (object == null) return null;
+  return "${double2str(object.left)},${double2str(object.top)},${double2str(object.right)},${double2str(object.bottom)}";
+}
+
+class BorderSideConverter extends JsonConverter<BorderSide?, String?> {
+  const BorderSideConverter();
+
+  @override
+  BorderSide? fromJson(String? json) {
+    if (json == null) return null;
+    final values = json.split(',');
+    if (values.length == 1) {
+      final val = double.parse(values.single);
+      return BorderSide(width: val);
+    }
+
+    return BorderSide(
+      color: const ColorJsonConverter().fromJson(values[1])!,
+      width: double.parse(values[0]),
+    );
+  }
+
+  @override
+  String? toJson(BorderSide? object) {
+    if (object == null) return null;
+    return '${double2str(object.width)},${const ColorJsonConverter().toJson(object.color)}';
+  }
+}
+
+class DoubleConverter extends JsonConverter<double?, String?> {
+  const DoubleConverter();
+
+  @override
+  double? fromJson(String? json) {
+    if (json == null) return null;
+    return double.parse(json);
+  }
+
+  @override
+  String? toJson(double? object) {
+    if (object == null) return null;
+    return double2str(object);
   }
 }

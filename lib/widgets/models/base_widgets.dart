@@ -6,36 +6,69 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'base_widgets.g.dart';
 
+enum FontWeightData {
+  normal,
+  medium,
+}
+
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
+class AspectRatioData extends WidgetData {
+  final double ratio;
+  final WidgetData child;
+
+  AspectRatioData({
+    required this.ratio,
+    required this.child,
+  }) : super(WidgetTag.aspectRatio);
+
+  factory AspectRatioData.fromJson(Map<String, dynamic> json) =>
+      _$AspectRatioDataFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$AspectRatioDataToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is AspectRatioData && other.ratio == ratio;
+  }
+
+  @override
+  String toString() => 'AspectRatio(ratio: $ratio)';
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
 @ColorJsonConverter()
-class TextStyle {
+class TextStyleData {
   final Color? color;
   final Color? backgroundColor;
-  final int? fontSize;
+  final double? fontSize;
+  final FontWeightData? fontWeight;
 
   // final FontWeight fontWeight;
   // final double letterSpacing;
   // final double wordSpacing;
 
-  const TextStyle({
+  const TextStyleData({
     this.color,
     this.backgroundColor,
     this.fontSize,
-
-    // this.fontWeight,
+    this.fontWeight,
     // this.letterSpacing,
     // this.wordSpacing,
   });
 
-  factory TextStyle.fromJson(Map<String, dynamic> json) =>
-      _$TextStyleFromJson(json);
+  factory TextStyleData.fromJson(Map<String, dynamic> json) =>
+      _$TextStyleDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$TextStyleToJson(this);
+  Map<String, dynamic> toJson() => _$TextStyleDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is TextStyle &&
+    return other is TextStyleData &&
         color == other.color &&
         backgroundColor == other.backgroundColor &&
         fontSize == other.fontSize;
@@ -43,10 +76,11 @@ class TextStyle {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Text extends Widget {
+@DoubleConverter()
+class TextData extends WidgetData {
   final String data;
 
-  final TextStyle? style;
+  final TextStyleData? style;
   final TextAlign? textAlign;
 
   // final TextDirection? textDirection;
@@ -54,7 +88,7 @@ class Text extends Widget {
   final TextOverflow? overflow;
   final int? maxLines;
 
-  Text(
+  TextData(
     this.data, {
     this.style,
     this.textAlign,
@@ -62,17 +96,19 @@ class Text extends Widget {
     this.softWrap,
     this.overflow,
     this.maxLines,
-  }) : super(WidgetTag.text);
+    EdgeInsets? padding,
+  }) : super(WidgetTag.text, padding: padding);
 
-  factory Text.fromJson(Map<String, dynamic> json) => _$TextFromJson(json);
+  factory TextData.fromJson(Map<String, dynamic> json) =>
+      _$TextDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$TextToJson(this);
+  Map<String, dynamic> toJson() => _$TextDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Text &&
+    return other is TextData &&
         data == other.data &&
         style == other.style &&
         textAlign == other.textAlign &&
@@ -89,37 +125,41 @@ class Text extends Widget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
 @AlignmentJsonConverter()
 @RectJsonConverter()
-class Image extends Widget {
+class ImageData extends WidgetData {
   final String src;
   final double? width;
   final double? height;
   final BoxFit? fit;
   final Alignment? alignment;
-  final ImageRepeat repeat;
+  final ImageRepeat? repeat;
   final Rect? centerSlice;
+  final double? radius;
 
-  Image(
+  ImageData(
     this.src, {
     this.width,
     this.height,
     this.fit,
-    Alignment? alignment,
-    this.repeat = ImageRepeat.noRepeat,
+    this.alignment,
+    this.repeat,
     this.centerSlice,
-  })  : alignment = alignment ?? Alignment.center,
-        super(WidgetTag.image);
+    this.radius,
+    EdgeInsets? padding,
+  }) : super(WidgetTag.image, padding: padding);
 
-  factory Image.fromJson(Map<String, dynamic> json) => _$ImageFromJson(json);
+  factory ImageData.fromJson(Map<String, dynamic> json) =>
+      _$ImageDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ImageToJson(this);
+  Map<String, dynamic> toJson() => _$ImageDataToJson(this);
 
   @override
   operator ==(Object other) =>
       identical(this, other) ||
-      other is Image &&
+      other is ImageData &&
           runtimeType == other.runtimeType &&
           src == other.src &&
           width == other.width &&
@@ -136,31 +176,47 @@ class Image extends Widget {
 }
 
 enum ButtonType {
+  raw,
   text,
   elevated,
   outlined,
 }
 
+enum ButtonSize {
+  big,
+  standard,
+  small,
+  mini,
+}
+
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
-class Button extends SingleChildWidget {
-  final ButtonType type;
+@DoubleConverter()
+@BorderSideConverter()
+class ButtonData extends SingleChildWidget {
+  final ButtonType? type;
+  final ButtonSize? size;
   final String? href;
+  final BorderSide? border;
 
-  Button({
-    this.type = ButtonType.outlined,
-    required Widget child,
+  ButtonData({
+    this.type,
+    required WidgetData child,
+    this.size,
     this.href,
-  }) : super(WidgetTag.button, child);
+    this.border,
+    EdgeInsets? padding,
+  }) : super(WidgetTag.button, child: child, padding: padding);
 
-  factory Button.fromJson(Map<String, dynamic> json) => _$ButtonFromJson(json);
+  factory ButtonData.fromJson(Map<String, dynamic> json) =>
+      _$ButtonDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ButtonToJson(this);
+  Map<String, dynamic> toJson() => _$ButtonDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Button &&
+    return other is ButtonData &&
         type == other.type &&
         href == other.href &&
         child == other.child;
@@ -173,26 +229,28 @@ class Button extends SingleChildWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
 @ColorJsonConverter()
-class Border {
+class BorderData {
   final Color? color;
   final double? width;
   final double? radius;
 
-  const Border({
+  const BorderData({
     this.color,
     this.width,
     this.radius,
   });
 
-  factory Border.fromJson(Map<String, dynamic> json) => _$BorderFromJson(json);
+  factory BorderData.fromJson(Map<String, dynamic> json) =>
+      _$BorderDataFromJson(json);
 
-  Map<String, dynamic> toJson() => _$BorderToJson(this);
+  Map<String, dynamic> toJson() => _$BorderDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Border &&
+    return other is BorderData &&
         color == other.color &&
         width == other.width &&
         radius == other.radius;
@@ -205,34 +263,36 @@ class Border {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
 @AlignmentJsonConverter()
 @ColorJsonConverter()
-class Container extends SingleChildWidget {
+class ContainerData extends SingleChildWidget {
   final double? width;
   final double? height;
-  final Border? border;
+  final BorderData? border;
   final Alignment? alignment;
   final Color? backgroundColor;
 
-  Container({
-    Widget? child,
+  ContainerData({
+    WidgetData? child,
     this.width,
     this.height,
     this.border,
     this.alignment,
     this.backgroundColor,
-  }) : super(WidgetTag.container, child);
+    EdgeInsets? padding,
+  }) : super(WidgetTag.container, child: child, padding: padding);
 
-  factory Container.fromJson(Map<String, dynamic> json) =>
-      _$ContainerFromJson(json);
+  factory ContainerData.fromJson(Map<String, dynamic> json) =>
+      _$ContainerDataFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ContainerToJson(this);
+  Map<String, dynamic> toJson() => _$ContainerDataToJson(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is Container &&
+    return other is ContainerData &&
         width == other.width &&
         height == other.height &&
         border == other.border &&
@@ -244,5 +304,37 @@ class Container extends SingleChildWidget {
   @override
   String toString() {
     return 'Container{width: $width, height: $height, border: $border, alignment: $alignment, backgroundColor: $backgroundColor, child: $child}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleConverter()
+@ColorJsonConverter()
+class DividerData extends WidgetData {
+  final double? thickness;
+  final Color? color;
+
+  DividerData({
+    this.thickness,
+    this.color,
+  }) : super(WidgetTag.divider);
+
+  factory DividerData.fromJson(Map<String, dynamic> json) =>
+      _$DividerDataFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$DividerDataToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is DividerData &&
+        thickness == other.thickness &&
+        color == other.color;
+  }
+
+  @override
+  String toString() {
+    return 'Divider{thickness: $thickness, color: $color}';
   }
 }

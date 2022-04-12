@@ -6,9 +6,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('full text fields', () {
-    final text = dv.Text(
+    final text = dv.TextData(
       'Text',
-      style: const dv.TextStyle(
+      style: const dv.TextStyleData(
         fontSize: 20,
         color: Colors.red,
         backgroundColor: Colors.green,
@@ -36,11 +36,11 @@ void main() {
   });
 
   test('no optional text fields', () {
-    final text = dv.Text('Text');
+    final text = dv.TextData('Text');
     expect(text.toJson(), equals({"tag": "text", "data": "Text"}));
   });
 
-  test('row', () {
+  test('test Row widget', () {
     final json = {
       "tag": "row",
       "children": [
@@ -51,11 +51,38 @@ void main() {
         }
       ]
     };
-    final row = dv.Row(children: [
-      dv.Text("t"),
-      dv.Container(child: dv.Text("2")),
+    final row = dv.RowData(children: [
+      dv.TextData("t"),
+      dv.ContainerData(child: dv.TextData("2")),
     ]);
     expect(row.toJson(), equals(json));
-    expect(dv.Widget.fromJson(json), row);
+    expect(dv.WidgetData.fromJson(json), row);
+  });
+
+  test('test widget tree', () {
+    final json = {
+      'tag': 'container',
+      'child': {
+        'tag': 'row',
+        'children': [
+          {'tag': 'text', 'data': 't'},
+          {
+            'tag': 'container',
+            'child': {'tag': 'text', 'data': '2'}
+          }
+        ]
+      },
+      'width': 100.0,
+      'height': 200.0
+    };
+    final row = dv.ContainerData(
+        width: 100,
+        height: 200,
+        child: dv.RowData(children: [
+          dv.TextData("t"),
+          dv.ContainerData(child: dv.TextData("2")),
+        ]));
+    expect(row.toJson(), equals(json));
+    expect(dv.WidgetData.fromJson(json), row);
   });
 }

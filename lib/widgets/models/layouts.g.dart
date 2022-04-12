@@ -6,11 +6,14 @@ part of 'layouts.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Expanded _$ExpandedFromJson(Map<String, dynamic> json) => Expanded(
-      Widget.fromJson(json['child'] as Map<String, dynamic>),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+ExpandedData _$ExpandedDataFromJson(Map<String, dynamic> json) => ExpandedData(
+      flex: json['flex'] as int?,
+      child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
+    )
+      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
-Map<String, dynamic> _$ExpandedToJson(Expanded instance) {
+Map<String, dynamic> _$ExpandedDataToJson(ExpandedData instance) {
   final val = <String, dynamic>{
     'tag': _$WidgetTagEnumMap[instance.tag],
   };
@@ -21,65 +24,40 @@ Map<String, dynamic> _$ExpandedToJson(Expanded instance) {
     }
   }
 
-  writeNotNull('child', instance.child?.toJson());
-  return val;
-}
-
-const _$WidgetTagEnumMap = {
-  WidgetTag.text: 'text',
-  WidgetTag.image: 'image',
-  WidgetTag.button: 'button',
-  WidgetTag.container: 'container',
-  WidgetTag.expanded: 'expanded',
-  WidgetTag.flexible: 'flexible',
-  WidgetTag.spacer: 'spacer',
-  WidgetTag.positioned: 'positioned',
-  WidgetTag.row: 'row',
-  WidgetTag.column: 'column',
-  WidgetTag.stack: 'stack',
-};
-
-Flexible _$FlexibleFromJson(Map<String, dynamic> json) => Flexible(
-      Widget.fromJson(json['child'] as Map<String, dynamic>),
-      (json['flex'] as num?)?.toDouble(),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
-
-Map<String, dynamic> _$FlexibleToJson(Flexible instance) {
-  final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('child', instance.child?.toJson());
   writeNotNull('flex', instance.flex);
   return val;
 }
 
-Map<String, dynamic> _$SpacerToJson(Spacer instance) => <String, dynamic>{
-      'tag': _$WidgetTagEnumMap[instance.tag],
-    };
+const _$WidgetTagEnumMap = {
+  WidgetTag.aspectRatio: 'aspectRatio',
+  WidgetTag.text: 'text',
+  WidgetTag.image: 'image',
+  WidgetTag.button: 'button',
+  WidgetTag.divider: 'divider',
+  WidgetTag.container: 'container',
+  WidgetTag.expanded: 'expanded',
+  WidgetTag.flexible: 'flexible',
+  WidgetTag.spacer: 'spacer',
+  WidgetTag.positioned: 'positioned',
+  WidgetTag.gridView: 'gridView',
+  WidgetTag.row: 'row',
+  WidgetTag.column: 'column',
+  WidgetTag.stack: 'stack',
+  WidgetTag.markdown: 'markdown',
+};
 
-Row _$RowFromJson(Map<String, dynamic> json) => Row(
-      mainAxisAlignment: $enumDecodeNullable(
-          _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),
-      mainAxisSize:
-          $enumDecodeNullable(_$MainAxisSizeEnumMap, json['mainAxisSize']),
-      crossAxisAlignment: $enumDecodeNullable(
-          _$CrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
-      children: (json['children'] as List<dynamic>)
-          .map((e) => Widget.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+FlexibleData _$FlexibleDataFromJson(Map<String, dynamic> json) => FlexibleData(
+      child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
+      flex: json['flex'] as int?,
+    )
+      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
-Map<String, dynamic> _$RowToJson(Row instance) {
+Map<String, dynamic> _$FlexibleDataToJson(FlexibleData instance) {
   final val = <String, dynamic>{
     'tag': _$WidgetTagEnumMap[instance.tag],
-    'children': instance.children.map((e) => e.toJson()).toList(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -88,11 +66,68 @@ Map<String, dynamic> _$RowToJson(Row instance) {
     }
   }
 
-  writeNotNull('mainAxisAlignment',
-      _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment]);
-  writeNotNull('mainAxisSize', _$MainAxisSizeEnumMap[instance.mainAxisSize]);
-  writeNotNull('crossAxisAlignment',
-      _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment]);
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('child', instance.child?.toJson());
+  writeNotNull('flex', instance.flex);
+  return val;
+}
+
+SpacerData _$SpacerDataFromJson(Map<String, dynamic> json) => SpacerData(
+      flex: json['flex'] as int?,
+    )
+      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+
+Map<String, dynamic> _$SpacerDataToJson(SpacerData instance) {
+  final val = <String, dynamic>{
+    'tag': _$WidgetTagEnumMap[instance.tag],
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
+  return val;
+}
+
+RowData _$RowDataFromJson(Map<String, dynamic> json) => RowData(
+      mainAxisAlignment:
+          $enumDecodeNullable(_$MainAxisAlignmentEnumMap, json['hAlign']),
+      mainAxisSize: $enumDecodeNullable(_$MainAxisSizeEnumMap, json['size']),
+      crossAxisAlignment:
+          $enumDecodeNullable(_$CrossAxisAlignmentEnumMap, json['vAlign']),
+      textStyle: json['textStyle'] == null
+          ? null
+          : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      children: (json['children'] as List<dynamic>)
+          .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+
+Map<String, dynamic> _$RowDataToJson(RowData instance) {
+  final val = <String, dynamic>{
+    'tag': _$WidgetTagEnumMap[instance.tag],
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  val['children'] = instance.children.map((e) => e.toJson()).toList();
+  writeNotNull('textStyle', instance.textStyle?.toJson());
+  writeNotNull(
+      'hAlign', _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment]);
+  writeNotNull('size', _$MainAxisSizeEnumMap[instance.mainAxisSize]);
+  writeNotNull(
+      'vAlign', _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment]);
   return val;
 }
 
@@ -118,22 +153,24 @@ const _$CrossAxisAlignmentEnumMap = {
   CrossAxisAlignment.baseline: 'baseline',
 };
 
-Column _$ColumnFromJson(Map<String, dynamic> json) => Column(
-      mainAxisAlignment: $enumDecodeNullable(
-          _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),
-      mainAxisSize:
-          $enumDecodeNullable(_$MainAxisSizeEnumMap, json['mainAxisSize']),
-      crossAxisAlignment: $enumDecodeNullable(
-          _$CrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
+ColumnData _$ColumnDataFromJson(Map<String, dynamic> json) => ColumnData(
+      mainAxisAlignment:
+          $enumDecodeNullable(_$MainAxisAlignmentEnumMap, json['vAlign']),
+      mainAxisSize: $enumDecodeNullable(_$MainAxisSizeEnumMap, json['size']),
+      crossAxisAlignment:
+          $enumDecodeNullable(_$CrossAxisAlignmentEnumMap, json['hAlign']),
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      textStyle: json['textStyle'] == null
+          ? null
+          : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
       children: (json['children'] as List<dynamic>)
-          .map((e) => Widget.fromJson(e as Map<String, dynamic>))
+          .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
     )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
 
-Map<String, dynamic> _$ColumnToJson(Column instance) {
+Map<String, dynamic> _$ColumnDataToJson(ColumnData instance) {
   final val = <String, dynamic>{
     'tag': _$WidgetTagEnumMap[instance.tag],
-    'children': instance.children.map((e) => e.toJson()).toList(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -142,25 +179,31 @@ Map<String, dynamic> _$ColumnToJson(Column instance) {
     }
   }
 
-  writeNotNull('mainAxisAlignment',
-      _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment]);
-  writeNotNull('mainAxisSize', _$MainAxisSizeEnumMap[instance.mainAxisSize]);
-  writeNotNull('crossAxisAlignment',
-      _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment]);
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  val['children'] = instance.children.map((e) => e.toJson()).toList();
+  writeNotNull('textStyle', instance.textStyle?.toJson());
+  writeNotNull(
+      'vAlign', _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment]);
+  writeNotNull('size', _$MainAxisSizeEnumMap[instance.mainAxisSize]);
+  writeNotNull(
+      'hAlign', _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment]);
   return val;
 }
 
-Positioned _$PositionedFromJson(Map<String, dynamic> json) => Positioned(
-      Widget.fromJson(json['child'] as Map<String, dynamic>),
-      top: (json['top'] as num?)?.toDouble(),
-      right: (json['right'] as num?)?.toDouble(),
-      bottom: (json['bottom'] as num?)?.toDouble(),
-      left: (json['left'] as num?)?.toDouble(),
-      width: (json['width'] as num?)?.toDouble(),
-      height: (json['height'] as num?)?.toDouble(),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+PositionedData _$PositionedDataFromJson(Map<String, dynamic> json) =>
+    PositionedData(
+      child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
+      top: const DoubleConverter().fromJson(json['top'] as String?),
+      right: const DoubleConverter().fromJson(json['right'] as String?),
+      bottom: const DoubleConverter().fromJson(json['bottom'] as String?),
+      left: const DoubleConverter().fromJson(json['left'] as String?),
+      width: const DoubleConverter().fromJson(json['width'] as String?),
+      height: const DoubleConverter().fromJson(json['height'] as String?),
+    )
+      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
-Map<String, dynamic> _$PositionedToJson(Positioned instance) {
+Map<String, dynamic> _$PositionedDataToJson(PositionedData instance) {
   final val = <String, dynamic>{
     'tag': _$WidgetTagEnumMap[instance.tag],
   };
@@ -171,28 +214,32 @@ Map<String, dynamic> _$PositionedToJson(Positioned instance) {
     }
   }
 
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('child', instance.child?.toJson());
-  writeNotNull('top', instance.top);
-  writeNotNull('right', instance.right);
-  writeNotNull('bottom', instance.bottom);
-  writeNotNull('left', instance.left);
-  writeNotNull('width', instance.width);
-  writeNotNull('height', instance.height);
+  writeNotNull('top', const DoubleConverter().toJson(instance.top));
+  writeNotNull('right', const DoubleConverter().toJson(instance.right));
+  writeNotNull('bottom', const DoubleConverter().toJson(instance.bottom));
+  writeNotNull('left', const DoubleConverter().toJson(instance.left));
+  writeNotNull('width', const DoubleConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleConverter().toJson(instance.height));
   return val;
 }
 
-Stack _$StackFromJson(Map<String, dynamic> json) => Stack(
-      alignment: const AlignmentJsonConverter()
-          .fromJson(json['alignment'] as Map<String, double>?),
+StackData _$StackDataFromJson(Map<String, dynamic> json) => StackData(
+      alignment:
+          const AlignmentJsonConverter().fromJson(json['alignment'] as String?),
       children: (json['children'] as List<dynamic>)
-          .map((e) => Widget.fromJson(e as Map<String, dynamic>))
+          .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      textStyle: json['textStyle'] == null
+          ? null
+          : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
     )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
 
-Map<String, dynamic> _$StackToJson(Stack instance) {
+Map<String, dynamic> _$StackDataToJson(StackData instance) {
   final val = <String, dynamic>{
     'tag': _$WidgetTagEnumMap[instance.tag],
-    'children': instance.children.map((e) => e.toJson()).toList(),
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -201,7 +248,61 @@ Map<String, dynamic> _$StackToJson(Stack instance) {
     }
   }
 
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  val['children'] = instance.children.map((e) => e.toJson()).toList();
+  writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull(
       'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
   return val;
 }
+
+GridViewData _$GridViewDataFromJson(Map<String, dynamic> json) => GridViewData(
+      crossAxisCount: json['crossAxisCount'] as int,
+      scrollDirection:
+          $enumDecodeNullable(_$AxisEnumMap, json['scrollDirection']),
+      mainAxisSpacing:
+          const DoubleConverter().fromJson(json['mainAxisSpacing'] as String?),
+      crossAxisSpacing:
+          const DoubleConverter().fromJson(json['crossAxisSpacing'] as String?),
+      childAspectRatio:
+          const DoubleConverter().fromJson(json['childAspectRatio'] as String?),
+      shrikWrap: json['shrikWrap'] as bool?,
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      textStyle: json['textStyle'] == null
+          ? null
+          : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>)
+          .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+
+Map<String, dynamic> _$GridViewDataToJson(GridViewData instance) {
+  final val = <String, dynamic>{
+    'tag': _$WidgetTagEnumMap[instance.tag],
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  val['children'] = instance.children.map((e) => e.toJson()).toList();
+  writeNotNull('textStyle', instance.textStyle?.toJson());
+  writeNotNull('scrollDirection', _$AxisEnumMap[instance.scrollDirection]);
+  val['crossAxisCount'] = instance.crossAxisCount;
+  writeNotNull('mainAxisSpacing',
+      const DoubleConverter().toJson(instance.mainAxisSpacing));
+  writeNotNull('crossAxisSpacing',
+      const DoubleConverter().toJson(instance.crossAxisSpacing));
+  writeNotNull('childAspectRatio',
+      const DoubleConverter().toJson(instance.childAspectRatio));
+  writeNotNull('shrikWrap', instance.shrikWrap);
+  return val;
+}
+
+const _$AxisEnumMap = {
+  Axis.horizontal: 'horizontal',
+  Axis.vertical: 'vertical',
+};
