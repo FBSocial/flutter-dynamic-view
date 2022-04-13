@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dynamic_view/dynamic_view.dart';
 import 'package:example/samples/samples.dart';
@@ -96,9 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   try {
                     return DynamicView.fromMap(jsonDecode(code.toString()));
                   } catch (e) {
-                    if (kDebugMode) {
-                      print(e);
-                    }
+                    log(e.toString(), error: e);
                     return const Center(child: Text("数据错误"));
                   }
                 },
