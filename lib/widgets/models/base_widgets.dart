@@ -1,6 +1,7 @@
 // ignore_for_file: hash_and_equals
 
 import 'package:dynamic_view/widgets/models/widgets.dart';
+import 'package:dynamic_view/widgets/views/base_widgets.dart';
 import 'package:flutter/material.dart' hide Widget;
 import 'package:json_annotation/json_annotation.dart';
 
@@ -64,6 +65,8 @@ class TextStyleData {
       _$TextStyleDataFromJson(json);
 
   Map<String, dynamic> toJson() => _$TextStyleDataToJson(this);
+
+  TextStyle? toTextStyle() => BaseWidget.textStyleFrom(this);
 
   @override
   bool operator ==(Object other) {

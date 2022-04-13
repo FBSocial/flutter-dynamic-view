@@ -7,12 +7,19 @@ import 'package:dynamic_view/widgets/views/advance_widgets.dart';
 import 'package:dynamic_view/widgets/views/base_widgets.dart';
 import 'package:dynamic_view/widgets/views/layout_widgets.dart';
 import 'package:flutter/material.dart';
+
 import '../models/advance_widgets.dart';
 
 abstract class DynamicViewConfig {
   Widget markdownBuilder(Object? data);
 
   void onClick(String? href);
+
+  Widget userAvatarBuilder(UserAvatarData data);
+
+  Widget userNameBuilder(UserNameData data);
+
+  Widget channelBuilder(ChannelNameData data);
 }
 
 class DefaultDynamicViewConfig extends DynamicViewConfig {
@@ -22,9 +29,7 @@ class DefaultDynamicViewConfig extends DynamicViewConfig {
   }
 
   @override
-  Widget markdownBuilder(data) {
-    throw UnimplementedError();
-  }
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class DynamicView {
@@ -99,10 +104,12 @@ class DynamicView {
       // 高级组件
       case WidgetTag.markdown:
         return AdvanceWidgets.markdownFrom(data as MarkdownData);
-      // case WidgetTag.userAvatar:
-      //   return AdvanceWidgets.userAvatarFrom(data as UserAvatarData);
-      // case WidgetTag.userName:
-      //   return AdvanceWidgets.userNameFrom(data as UserNameData);
+      case WidgetTag.userAvatar:
+        return AdvanceWidgets.userAvatarFrom(data as UserAvatarData);
+      case WidgetTag.userName:
+        return AdvanceWidgets.userNameFrom(data as UserNameData);
+      case WidgetTag.channel:
+        return AdvanceWidgets.channelFrom(data as ChannelNameData);
     }
   }
 }

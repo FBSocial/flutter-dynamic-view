@@ -46,6 +46,9 @@ const _$WidgetTagEnumMap = {
   WidgetTag.column: 'column',
   WidgetTag.stack: 'stack',
   WidgetTag.markdown: 'markdown',
+  WidgetTag.userAvatar: 'userAvatar',
+  WidgetTag.userName: 'userName',
+  WidgetTag.channel: 'channel',
 };
 
 FlexibleData _$FlexibleDataFromJson(Map<String, dynamic> json) => FlexibleData(

@@ -23,4 +23,16 @@ class AdvanceWidgets {
     }
     return DynamicView.config.markdownBuilder(delta);
   }
+
+  static Widget userAvatarFrom(UserAvatarData data) {
+    return DynamicView.config.userAvatarBuilder(data);
+  }
+
+  static Widget userNameFrom(UserNameData data) {
+    return DynamicView.config.userNameBuilder(data);
+  }
+
+  static Widget channelFrom(ChannelNameData data) {
+    return DynamicView.config.channelBuilder(data);
+  }
 }
