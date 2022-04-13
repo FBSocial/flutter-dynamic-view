@@ -39,8 +39,6 @@ enum WidgetTag {
   stack,
   // advance
   markdown,
-  // userAvatar,
-  // userName,
 }
 
 @JsonSerializable(createFactory: false)
@@ -86,10 +84,6 @@ abstract class WidgetData {
         return GridViewData.fromJson(json);
       case WidgetTag.markdown:
         return MarkdownData.fromJson(json);
-      // case WidgetTag.userAvatar:
-      //   return UserAvatarData.fromJson(json);
-      // case WidgetTag.userName:
-      //   return UserNameData.fromJson(json);
     }
   }
 
