@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
 import 'package:dynamic_view/widgets/models/widgets.dart';
@@ -8,29 +6,8 @@ import 'package:dynamic_view/widgets/views/base_widgets.dart';
 import 'package:dynamic_view/widgets/views/layout_widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../config.dart';
 import '../models/advance_widgets.dart';
-
-abstract class DynamicViewConfig {
-  Widget markdownBuilder(Object? data);
-
-  void onClick(BuildContext context, String? href);
-
-  Widget userAvatarBuilder(UserAvatarData data);
-
-  Widget userNameBuilder(UserNameData data);
-
-  Widget channelBuilder(ChannelNameData data);
-}
-
-class DefaultDynamicViewConfig extends DynamicViewConfig {
-  @override
-  void onClick(BuildContext context, String? href) {
-    log('onClick $href');
-  }
-
-  @override
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
 
 class DynamicView {
   static DynamicViewConfig config = DefaultDynamicViewConfig();
