@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
 import 'package:dynamic_view/widgets/models/widgets.dart';
@@ -6,13 +8,12 @@ import 'package:dynamic_view/widgets/views/base_widgets.dart';
 import 'package:dynamic_view/widgets/views/layout_widgets.dart';
 import 'package:flutter/material.dart';
 
-import '../config.dart';
 import '../models/advance_widgets.dart';
 
 abstract class DynamicViewConfig {
   Widget markdownBuilder(Object? data);
 
-  void onClick(String? href);
+  void onClick(BuildContext context, String? href);
 
   Widget userAvatarBuilder(UserAvatarData data);
 
@@ -23,7 +24,7 @@ abstract class DynamicViewConfig {
 
 class DefaultDynamicViewConfig extends DynamicViewConfig {
   @override
-  void onClick(String? href) {
+  void onClick(BuildContext context, String? href) {
     log('onClick $href');
   }
 
