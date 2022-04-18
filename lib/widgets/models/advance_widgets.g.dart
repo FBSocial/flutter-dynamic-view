@@ -11,12 +11,12 @@ UserAvatarData _$UserAvatarDataFromJson(Map<String, dynamic> json) =>
       json['userId'] as String,
       size: (json['size'] as num?)?.toDouble(),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -31,39 +31,18 @@ Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   return val;
 }
 
-const _$WidgetTagEnumMap = {
-  WidgetTag.aspectRatio: 'aspectRatio',
-  WidgetTag.text: 'text',
-  WidgetTag.image: 'image',
-  WidgetTag.button: 'button',
-  WidgetTag.divider: 'divider',
-  WidgetTag.container: 'container',
-  WidgetTag.expanded: 'expanded',
-  WidgetTag.flexible: 'flexible',
-  WidgetTag.spacer: 'spacer',
-  WidgetTag.positioned: 'positioned',
-  WidgetTag.gridView: 'gridView',
-  WidgetTag.row: 'row',
-  WidgetTag.column: 'column',
-  WidgetTag.stack: 'stack',
-  WidgetTag.markdown: 'markdown',
-  WidgetTag.userAvatar: 'userAvatar',
-  WidgetTag.userName: 'userName',
-  WidgetTag.channel: 'channel',
-};
-
 UserNameData _$UserNameDataFromJson(Map<String, dynamic> json) => UserNameData(
       json['userId'] as String,
       style: json['style'] == null
           ? null
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -85,12 +64,12 @@ ChannelNameData _$ChannelNameDataFromJson(Map<String, dynamic> json) =>
           ? null
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -109,12 +88,12 @@ MarkdownData _$MarkdownDataFromJson(Map<String, dynamic> json) => MarkdownData(
       json['data'] as String,
       shrinkWrap: json['shrinkWrap'] as bool?,
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$MarkdownDataToJson(MarkdownData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {

@@ -1,4 +1,3 @@
-import 'package:dynamic_view/widgets/models/advance_widgets.dart';
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +87,7 @@ final kRowSamples =
           TextData('3'),
         ],
       )),
-  MarkdownData("`crossAxisAlignment` 设置为 `stretch` 能在垂直方向撑开父容器"),
+  TextData("`crossAxisAlignment` 设置为 `stretch` 能在垂直方向撑开父容器"),
   DividerData(),
   RowData(
     children: [
@@ -103,11 +102,11 @@ final kRowSamples =
         alignment: Alignment.center,
         backgroundColor: Colors.green,
         height: 50,
-        child: MarkdownData("使用 `expanded` 自动填充剩余空间", shrinkWrap: true),
+        child: TextData("使用 `expanded` 自动填充剩余空间"),
       )),
     ],
   ),
-  MarkdownData("`flexible` 与 `expanded` 相反，尽可能使用最少的空间"),
+  TextData("`flexible` 与 `expanded` 相反，尽可能使用最少的空间"),
   DividerData(),
   ContainerData(
     backgroundColor: Colors.blue,
@@ -117,5 +116,5 @@ final kRowSamples =
       TextData("右侧"),
     ]),
   ),
-  MarkdownData("`Spacer` 可以填充空白"),
+  TextData("`Spacer` 可以填充空白"),
 ]);

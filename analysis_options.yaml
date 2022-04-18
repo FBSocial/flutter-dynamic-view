@@ -1,6 +1,7 @@
 include: package:flutter_lints/flutter.yaml
 analyzer:
   exclude: [
+    .fvm/
     lib/widgets/models/widgets.g.dart
   ]
 

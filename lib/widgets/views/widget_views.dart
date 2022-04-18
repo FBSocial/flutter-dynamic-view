@@ -1,23 +1,54 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
 import 'package:dynamic_view/widgets/models/widgets.dart';
-import 'package:dynamic_view/widgets/views/advance_widgets.dart';
 import 'package:dynamic_view/widgets/views/base_widgets.dart';
 import 'package:dynamic_view/widgets/views/layout_widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../config.dart';
-import '../models/advance_widgets.dart';
+
+typedef DynamicViewBuilder = Widget Function(WidgetData);
 
 class DynamicView {
-  static DynamicViewConfig config = DefaultDynamicViewConfig();
+  DynamicView._();
+
+  // @formatter:off
+  static final Map<String, DynamicViewBuilder> _widgetBuilder = {
+    WidgetTag.aspectRatio.name: (d) => BaseWidget.aspectRatioFrom(d as AspectRatioData),
+    WidgetTag.text.name       : (d) => BaseWidget.textFrom(d as TextData),
+    WidgetTag.image.name      : (d) => BaseWidget.imageFrom(d as ImageData),
+    WidgetTag.button.name     : (d) => BaseWidget.buttonFrom(d as ButtonData),
+    WidgetTag.container.name  : (d) => BaseWidget.containerFrom(d as ContainerData),
+    WidgetTag.divider.name    : (d) => BaseWidget.dividerFrom(d as DividerData),
+    WidgetTag.expanded.name   : (d) => LayoutWidgets.expandedFrom(d as ExpandedData),
+    WidgetTag.flexible.name   : (d) => LayoutWidgets.flexibleFrom(d as FlexibleData),
+    WidgetTag.spacer.name     : (d) => LayoutWidgets.spacerFrom(d as SpacerData),
+    WidgetTag.positioned.name : (d) => LayoutWidgets.positionedFrom(d as PositionedData),
+    WidgetTag.row.name        : (d) => LayoutWidgets.rowFrom(d as RowData),
+    WidgetTag.column.name     : (d) => LayoutWidgets.columnFrom(d as ColumnData),
+    WidgetTag.stack.name      : (d) => LayoutWidgets.stackFrom(d as StackData),
+    WidgetTag.gridView.name   : (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
+  };
+  // @formatter:on
+
+  /// set builder of [tag], or overwrite existing builder
+  static void setWidgetBuilder(String tag, DynamicViewBuilder builder) {
+    _widgetBuilder[tag] = builder;
+  }
 
   static Widget fromMap(Map<String, dynamic> map) {
     return fromData(WidgetData.fromJson(map));
   }
 
   static Widget fromData(WidgetData data) {
-    Widget widget = _fromData(data);
+    final builder = _widgetBuilder[data.tag];
+    if (builder == null) {
+      throw Exception('No builder function for tag: ${data.tag}');
+    }
+
+    Widget widget = builder(data);
     if (data.padding != null) {
       widget = Padding(
         padding: data.padding!,
@@ -35,58 +66,5 @@ class DynamicView {
     return widget;
   }
 
-  static Widget _fromData(WidgetData data) {
-    switch (data.tag) {
-      // 基本组件
-      case WidgetTag.aspectRatio:
-        return BaseWidget.aspectRatioFrom(data as AspectRatioData);
-      case WidgetTag.text:
-        return BaseWidget.textFrom(data as TextData);
-
-      case WidgetTag.image:
-        return BaseWidget.imageFrom(data as ImageData);
-
-      case WidgetTag.button:
-        return BaseWidget.buttonFrom(data as ButtonData);
-
-      case WidgetTag.container:
-        return BaseWidget.containerFrom(data as ContainerData);
-
-      case WidgetTag.divider:
-        return BaseWidget.dividerFrom(data as DividerData);
-      // 布局组件
-      case WidgetTag.expanded:
-        return LayoutWidgets.expandedFrom(data as ExpandedData);
-
-      case WidgetTag.flexible:
-        return LayoutWidgets.flexibleFrom(data as FlexibleData);
-
-      case WidgetTag.spacer:
-        return LayoutWidgets.spacerFrom(data as SpacerData);
-
-      case WidgetTag.positioned:
-        return LayoutWidgets.positionedFrom(data as PositionedData);
-
-      case WidgetTag.row:
-        return LayoutWidgets.rowFrom(data as RowData);
-
-      case WidgetTag.column:
-        return LayoutWidgets.columnFrom(data as ColumnData);
-
-      case WidgetTag.stack:
-        return LayoutWidgets.stackFrom(data as StackData);
-
-      case WidgetTag.gridView:
-        return LayoutWidgets.gridViewFrom(data as GridViewData);
-      // 高级组件
-      case WidgetTag.markdown:
-        return AdvanceWidgets.markdownFrom(data as MarkdownData);
-      case WidgetTag.userAvatar:
-        return AdvanceWidgets.userAvatarFrom(data as UserAvatarData);
-      case WidgetTag.userName:
-        return AdvanceWidgets.userNameFrom(data as UserNameData);
-      case WidgetTag.channel:
-        return AdvanceWidgets.channelFrom(data as ChannelNameData);
-    }
-  }
+  static DynamicViewConfig config = DefaultDynamicViewConfig();
 }

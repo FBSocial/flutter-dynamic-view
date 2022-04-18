@@ -12,7 +12,6 @@ dependencies:
     sdk: flutter
   json_serializable: ^6.1.5
   json_annotation: ^4.4.0
-  markdown_quill: ^0.0.1+1
 
 dev_dependencies:
   flutter_test:

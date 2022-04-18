@@ -10,12 +10,12 @@ ExpandedData _$ExpandedDataFromJson(Map<String, dynamic> json) => ExpandedData(
       flex: json['flex'] as int?,
       child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$ExpandedDataToJson(ExpandedData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -30,37 +30,16 @@ Map<String, dynamic> _$ExpandedDataToJson(ExpandedData instance) {
   return val;
 }
 
-const _$WidgetTagEnumMap = {
-  WidgetTag.aspectRatio: 'aspectRatio',
-  WidgetTag.text: 'text',
-  WidgetTag.image: 'image',
-  WidgetTag.button: 'button',
-  WidgetTag.divider: 'divider',
-  WidgetTag.container: 'container',
-  WidgetTag.expanded: 'expanded',
-  WidgetTag.flexible: 'flexible',
-  WidgetTag.spacer: 'spacer',
-  WidgetTag.positioned: 'positioned',
-  WidgetTag.gridView: 'gridView',
-  WidgetTag.row: 'row',
-  WidgetTag.column: 'column',
-  WidgetTag.stack: 'stack',
-  WidgetTag.markdown: 'markdown',
-  WidgetTag.userAvatar: 'userAvatar',
-  WidgetTag.userName: 'userName',
-  WidgetTag.channel: 'channel',
-};
-
 FlexibleData _$FlexibleDataFromJson(Map<String, dynamic> json) => FlexibleData(
       child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
       flex: json['flex'] as int?,
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$FlexibleDataToJson(FlexibleData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -78,12 +57,12 @@ Map<String, dynamic> _$FlexibleDataToJson(FlexibleData instance) {
 SpacerData _$SpacerDataFromJson(Map<String, dynamic> json) => SpacerData(
       flex: json['flex'] as int?,
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$SpacerDataToJson(SpacerData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -110,11 +89,11 @@ RowData _$RowDataFromJson(Map<String, dynamic> json) => RowData(
       children: (json['children'] as List<dynamic>)
           .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$RowDataToJson(RowData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -169,11 +148,11 @@ ColumnData _$ColumnDataFromJson(Map<String, dynamic> json) => ColumnData(
       children: (json['children'] as List<dynamic>)
           .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ColumnDataToJson(ColumnData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -203,12 +182,12 @@ PositionedData _$PositionedDataFromJson(Map<String, dynamic> json) =>
       width: const DoubleConverter().fromJson(json['width'] as String?),
       height: const DoubleConverter().fromJson(json['height'] as String?),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$PositionedDataToJson(PositionedData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -238,11 +217,11 @@ StackData _$StackDataFromJson(Map<String, dynamic> json) => StackData(
       textStyle: json['textStyle'] == null
           ? null
           : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$StackDataToJson(StackData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -277,11 +256,11 @@ GridViewData _$GridViewDataFromJson(Map<String, dynamic> json) => GridViewData(
       children: (json['children'] as List<dynamic>)
           .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$GridViewDataToJson(GridViewData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {

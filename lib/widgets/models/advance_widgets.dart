@@ -1,6 +1,7 @@
 // ignore_for_file: hash_and_equals
 
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
+import 'package:dynamic_view/widgets/models/json_converters.dart';
 import 'package:dynamic_view/widgets/models/widgets.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -11,7 +12,8 @@ class UserAvatarData extends WidgetData {
   final String userId;
   final double? size;
 
-  UserAvatarData(this.userId, {this.size}) : super(WidgetTag.userAvatar);
+  UserAvatarData(this.userId, {this.size})
+      : super(FanbookWidgetTag.userAvatar.name);
 
   factory UserAvatarData.fromJson(Map<String, dynamic> json) =>
       _$UserAvatarDataFromJson(json);
@@ -36,7 +38,8 @@ class UserNameData extends WidgetData {
   final String userId;
   final TextStyleData? style;
 
-  UserNameData(this.userId, {this.style}) : super(WidgetTag.userName);
+  UserNameData(this.userId, {this.style})
+      : super(FanbookWidgetTag.userName.name);
 
   factory UserNameData.fromJson(Map<String, dynamic> json) =>
       _$UserNameDataFromJson(json);
@@ -61,7 +64,7 @@ class ChannelNameData extends WidgetData {
   final String id;
   final TextStyleData? style;
 
-  ChannelNameData(this.id, {this.style}) : super(WidgetTag.channel);
+  ChannelNameData(this.id, {this.style}) : super(FanbookWidgetTag.channel.name);
 
   factory ChannelNameData.fromJson(Map<String, dynamic> json) =>
       _$ChannelNameDataFromJson(json);
@@ -86,7 +89,8 @@ class MarkdownData extends WidgetData {
   final String data;
   final bool? shrinkWrap;
 
-  MarkdownData(this.data, {this.shrinkWrap}) : super(WidgetTag.markdown);
+  MarkdownData(this.data, {this.shrinkWrap})
+      : super(FanbookWidgetTag.markdown.name);
 
   factory MarkdownData.fromJson(Map<String, dynamic> json) =>
       _$MarkdownDataFromJson(json);
