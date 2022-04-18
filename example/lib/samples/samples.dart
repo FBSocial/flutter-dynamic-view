@@ -7,7 +7,6 @@ import 'container_samples.dart';
 import 'divider_samples.dart';
 import 'grid_view_samples.dart';
 import 'image_samples.dart';
-import 'markdown_samples.dart';
 import 'text_samples.dart';
 
 final samples = <String, WidgetData>{
@@ -19,5 +18,4 @@ final samples = <String, WidgetData>{
   'row': kRowSamples,
   'stack': kStackSamples,
   'grid': kGridViewSamples,
-  'markdown': kMarkdownSamples,
 };

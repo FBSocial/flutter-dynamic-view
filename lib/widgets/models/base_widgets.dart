@@ -4,6 +4,8 @@ import 'package:dynamic_view/widgets/models/widgets.dart';
 import 'package:flutter/material.dart' hide Widget;
 import 'package:json_annotation/json_annotation.dart';
 
+import 'json_converters.dart';
+
 part 'base_widgets.g.dart';
 
 enum FontWeightData {
@@ -20,7 +22,7 @@ class AspectRatioData extends WidgetData {
   AspectRatioData({
     required this.ratio,
     required this.child,
-  }) : super(WidgetTag.aspectRatio);
+  }) : super(WidgetTag.aspectRatio.name);
 
   factory AspectRatioData.fromJson(Map<String, dynamic> json) =>
       _$AspectRatioDataFromJson(json);
@@ -97,7 +99,7 @@ class TextData extends WidgetData {
     this.overflow,
     this.maxLines,
     EdgeInsets? padding,
-  }) : super(WidgetTag.text, padding: padding);
+  }) : super(WidgetTag.text.name, padding: padding);
 
   factory TextData.fromJson(Map<String, dynamic> json) =>
       _$TextDataFromJson(json);
@@ -148,7 +150,7 @@ class ImageData extends WidgetData {
     this.centerSlice,
     this.radius,
     EdgeInsets? padding,
-  }) : super(WidgetTag.image, padding: padding);
+  }) : super(WidgetTag.image.name, padding: padding);
 
   factory ImageData.fromJson(Map<String, dynamic> json) =>
       _$ImageDataFromJson(json);
@@ -205,7 +207,7 @@ class ButtonData extends SingleChildWidget {
     this.href,
     this.border,
     EdgeInsets? padding,
-  }) : super(WidgetTag.button, child: child, padding: padding);
+  }) : super(WidgetTag.button.name, child: child, padding: padding);
 
   factory ButtonData.fromJson(Map<String, dynamic> json) =>
       _$ButtonDataFromJson(json);
@@ -281,7 +283,7 @@ class ContainerData extends SingleChildWidget {
     this.alignment,
     this.backgroundColor,
     EdgeInsets? padding,
-  }) : super(WidgetTag.container, child: child, padding: padding);
+  }) : super(WidgetTag.container.name, child: child, padding: padding);
 
   factory ContainerData.fromJson(Map<String, dynamic> json) =>
       _$ContainerDataFromJson(json);
@@ -317,7 +319,7 @@ class DividerData extends WidgetData {
   DividerData({
     this.thickness,
     this.color,
-  }) : super(WidgetTag.divider);
+  }) : super(WidgetTag.divider.name);
 
   factory DividerData.fromJson(Map<String, dynamic> json) =>
       _$DividerDataFromJson(json);

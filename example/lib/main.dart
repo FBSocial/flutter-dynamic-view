@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:dynamic_view/dynamic_view.dart';
 import 'package:example/samples/samples.dart';
 import 'package:example/widget_sample_tree.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_editor/json_editor.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -19,15 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      builder: (context, widget) => ResponsiveWrapper.builder(widget,
-          minWidth: 480,
-          defaultScale: true,
-          breakpoints: [
-            const ResponsiveBreakpoint.resize(480, name: MOBILE),
-            const ResponsiveBreakpoint.autoScale(800, name: TABLET),
-            const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
-          ],
-          background: Container(color: const Color(0xFFF5F5F5))),
+      builder: (context, widget) =>
+          ResponsiveWrapper.builder(widget,
+              minWidth: 480,
+              defaultScale: true,
+              breakpoints: [
+                const ResponsiveBreakpoint.resize(480, name: MOBILE),
+                const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+                const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+              ],
+              background: Container(color: const Color(0xFFF5F5F5))),
       home: const MyHomePage(),
     );
   }
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedSample.value = notification.sample;
               code.value = samples.containsKey(notification.sample)
                   ? JsonElement.fromString(
-                      jsonEncode(samples[notification.sample]!))
+                  jsonEncode(samples[notification.sample]!))
                   : JsonElement.fromJson({notification.sample: "Not Found"});
             }
           }
@@ -82,27 +82,28 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               child: ValueListenableBuilder<String>(
                   valueListenable: selectedSample,
-                  builder: (context, sample, child) => JsonEditor.object(
+                  builder: (context, sample, child) =>
+                      JsonEditor.object(
                         object:
-                            samples[sample]?.toJson() ?? {sample: "not found"},
+                        samples[sample]?.toJson() ?? {sample: "not found"},
                         onValueChanged: (value) => code.value = value,
                       )),
             ),
             const VerticalDivider(),
             Expanded(
                 child: SingleChildScrollView(
-              child: ValueListenableBuilder<JsonElement>(
-                valueListenable: code,
-                builder: (context, code, child) {
-                  try {
-                    return DynamicView.fromMap(jsonDecode(code.toString()));
-                  } catch (e) {
-                    log(e.toString(), error: e);
-                    return const Center(child: Text("数据错误"));
-                  }
-                },
-              ),
-            )),
+                  child: ValueListenableBuilder<JsonElement>(
+                    valueListenable: code,
+                    builder: (context, code, child) {
+                      try {
+                        return DynamicView.fromMap(jsonDecode(code.toString()));
+                      } catch (e) {
+                        log(e.toString(), error: e);
+                        return const Center(child: Text("数据错误"));
+                      }
+                    },
+                  ),
+                )),
           ],
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart' hide Widget;
 import 'package:json_annotation/json_annotation.dart';
 
 import 'base_widgets.dart';
+import 'json_converters.dart';
 
 part 'layouts.g.dart';
 
@@ -15,7 +16,7 @@ class ExpandedData extends SingleChildWidget {
   final int? flex;
 
   ExpandedData({this.flex, required WidgetData child})
-      : super(WidgetTag.expanded, child: child);
+      : super(WidgetTag.expanded.name, child: child);
 
   factory ExpandedData.fromJson(Map<String, dynamic> json) =>
       _$ExpandedDataFromJson(json);
@@ -43,7 +44,7 @@ class FlexibleData extends SingleChildWidget {
   FlexibleData({
     required WidgetData child,
     this.flex,
-  }) : super(WidgetTag.flexible, child: child);
+  }) : super(WidgetTag.flexible.name, child: child);
 
   factory FlexibleData.fromJson(Map<String, dynamic> json) =>
       _$FlexibleDataFromJson(json);
@@ -68,7 +69,7 @@ class FlexibleData extends SingleChildWidget {
 class SpacerData extends WidgetData {
   int? flex;
 
-  SpacerData({this.flex}) : super(WidgetTag.spacer);
+  SpacerData({this.flex}) : super(WidgetTag.spacer.name);
 
   factory SpacerData.fromJson(Map<String, dynamic> json) =>
       _$SpacerDataFromJson(json);
@@ -104,7 +105,7 @@ class RowData extends MultiChildrenWidget {
     TextStyleData? textStyle,
     EdgeInsets? padding,
     required List<WidgetData> children,
-  }) : super(WidgetTag.row,
+  }) : super(WidgetTag.row.name,
             children: children, padding: padding, textStyle: textStyle);
 
   factory RowData.fromJson(Map<String, dynamic> json) =>
@@ -146,7 +147,7 @@ class ColumnData extends MultiChildrenWidget {
     EdgeInsets? padding,
     TextStyleData? textStyle,
     required List<WidgetData> children,
-  }) : super(WidgetTag.column,
+  }) : super(WidgetTag.column.name,
             children: children, padding: padding, textStyle: textStyle);
 
   factory ColumnData.fromJson(Map<String, dynamic> json) =>
@@ -189,7 +190,7 @@ class PositionedData extends SingleChildWidget {
     this.left,
     this.width,
     this.height,
-  }) : super(WidgetTag.positioned, child: child);
+  }) : super(WidgetTag.positioned.name, child: child);
 
   factory PositionedData.fromJson(Map<String, dynamic> json) =>
       _$PositionedDataFromJson(json);
@@ -227,7 +228,7 @@ class StackData extends MultiChildrenWidget {
     required List<WidgetData> children,
     EdgeInsets? padding,
     TextStyleData? textStyle,
-  }) : super(WidgetTag.stack,
+  }) : super(WidgetTag.stack.name,
             children: children, padding: padding, textStyle: textStyle);
 
   factory StackData.fromJson(Map<String, dynamic> json) =>
@@ -270,7 +271,7 @@ class GridViewData extends MultiChildrenWidget {
     EdgeInsets? padding,
     TextStyleData? textStyle,
     required List<WidgetData> children,
-  }) : super(WidgetTag.gridView,
+  }) : super(WidgetTag.gridView.name,
             children: children, padding: padding, textStyle: textStyle);
 
   factory GridViewData.fromJson(Map<String, dynamic> json) =>

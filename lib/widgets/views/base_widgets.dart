@@ -86,31 +86,33 @@ class BaseWidget {
       padding: MaterialStateProperty.all(data.padding),
       visualDensity: visualDensity,
     );
-    switch (type) {
-      case ButtonType.raw:
-        return InkWell(
-          onTap: () => DynamicView.config.onClick(data.href),
-          child: DynamicView.fromData(data.child!),
-        );
-      case ButtonType.text:
-        return TextButton(
-          style: style,
-          onPressed: () => DynamicView.config.onClick(data.href),
-          child: DynamicView.fromData(data.child!),
-        );
-      case ButtonType.elevated:
-        return ElevatedButton(
-          style: style,
-          onPressed: () => DynamicView.config.onClick(data.href),
-          child: DynamicView.fromData(data.child!),
-        );
-      case ButtonType.outlined:
-        return OutlinedButton(
-          style: style,
-          onPressed: () => DynamicView.config.onClick(data.href),
-          child: DynamicView.fromData(data.child!),
-        );
-    }
+    return Builder(builder: (context) {
+      switch (type) {
+        case ButtonType.raw:
+          return InkWell(
+            onTap: () => DynamicView.config.onClick(context, data.href),
+            child: DynamicView.fromData(data.child!),
+          );
+        case ButtonType.text:
+          return TextButton(
+            style: style,
+            onPressed: () => DynamicView.config.onClick(context, data.href),
+            child: DynamicView.fromData(data.child!),
+          );
+        case ButtonType.elevated:
+          return ElevatedButton(
+            style: style,
+            onPressed: () => DynamicView.config.onClick(context, data.href),
+            child: DynamicView.fromData(data.child!),
+          );
+        case ButtonType.outlined:
+          return OutlinedButton(
+            style: style,
+            onPressed: () => DynamicView.config.onClick(context, data.href),
+            child: DynamicView.fromData(data.child!),
+          );
+      }
+    });
   }
 
   static Widget containerFrom(ContainerData data) {
