@@ -11,12 +11,12 @@ AspectRatioData _$AspectRatioDataFromJson(Map<String, dynamic> json) =>
       ratio: (json['ratio'] as num).toDouble(),
       child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -30,24 +30,6 @@ Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
   val['child'] = instance.child.toJson();
   return val;
 }
-
-const _$WidgetTagEnumMap = {
-  WidgetTag.aspectRatio: 'aspectRatio',
-  WidgetTag.text: 'text',
-  WidgetTag.image: 'image',
-  WidgetTag.button: 'button',
-  WidgetTag.divider: 'divider',
-  WidgetTag.container: 'container',
-  WidgetTag.expanded: 'expanded',
-  WidgetTag.flexible: 'flexible',
-  WidgetTag.spacer: 'spacer',
-  WidgetTag.positioned: 'positioned',
-  WidgetTag.gridView: 'gridView',
-  WidgetTag.row: 'row',
-  WidgetTag.column: 'column',
-  WidgetTag.stack: 'stack',
-  WidgetTag.markdown: 'markdown',
-};
 
 TextStyleData _$TextStyleDataFromJson(Map<String, dynamic> json) =>
     TextStyleData(
@@ -91,11 +73,11 @@ TextData _$TextDataFromJson(Map<String, dynamic> json) => TextData(
       overflow: $enumDecodeNullable(_$TextOverflowEnumMap, json['overflow']),
       maxLines: json['maxLines'] as int?,
       padding: edgeInsetsFromJson(json['padding'] as String?),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$TextDataToJson(TextData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -142,11 +124,11 @@ ImageData _$ImageDataFromJson(Map<String, dynamic> json) => ImageData(
           const RectJsonConverter().fromJson(json['centerSlice'] as String?),
       radius: const DoubleConverter().fromJson(json['radius'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ImageDataToJson(ImageData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -193,11 +175,11 @@ ButtonData _$ButtonDataFromJson(Map<String, dynamic> json) => ButtonData(
       href: json['href'] as String?,
       border: const BorderSideConverter().fromJson(json['border'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ButtonDataToJson(ButtonData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -265,11 +247,11 @@ ContainerData _$ContainerDataFromJson(Map<String, dynamic> json) =>
       backgroundColor: const ColorJsonConverter()
           .fromJson(json['backgroundColor'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
-    )..tag = $enumDecode(_$WidgetTagEnumMap, json['tag']);
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ContainerDataToJson(ContainerData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
@@ -294,12 +276,12 @@ DividerData _$DividerDataFromJson(Map<String, dynamic> json) => DividerData(
       thickness: const DoubleConverter().fromJson(json['thickness'] as String?),
       color: const ColorJsonConverter().fromJson(json['color'] as String?),
     )
-      ..tag = $enumDecode(_$WidgetTagEnumMap, json['tag'])
+      ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
 
 Map<String, dynamic> _$DividerDataToJson(DividerData instance) {
   final val = <String, dynamic>{
-    'tag': _$WidgetTagEnumMap[instance.tag],
+    'tag': instance.tag,
   };
 
   void writeNotNull(String key, dynamic value) {
