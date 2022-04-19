@@ -44,6 +44,14 @@ enum FanbookWidgetTag {
   channel,
 }
 
+extension WidgetTagExtension on WidgetTag {
+  String get name => toString().substring(10);
+}
+
+extension FanbookWidgetTagExtension on FanbookWidgetTag {
+  String get name => toString().substring(17);
+}
+
 @DoubleConverter()
 abstract class WidgetData {
   String tag;
