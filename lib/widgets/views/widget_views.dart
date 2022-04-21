@@ -17,25 +17,30 @@ class DynamicView {
   // @formatter:off
   static final Map<String, DynamicViewBuilder> _widgetBuilder = {
     WidgetTag.aspectRatio.name: (d) => BaseWidget.aspectRatioFrom(d as AspectRatioData),
-    WidgetTag.text.name       : (d) => BaseWidget.textFrom(d as TextData),
-    WidgetTag.image.name      : (d) => BaseWidget.imageFrom(d as ImageData),
-    WidgetTag.button.name     : (d) => BaseWidget.buttonFrom(d as ButtonData),
-    WidgetTag.container.name  : (d) => BaseWidget.containerFrom(d as ContainerData),
-    WidgetTag.divider.name    : (d) => BaseWidget.dividerFrom(d as DividerData),
-    WidgetTag.expanded.name   : (d) => LayoutWidgets.expandedFrom(d as ExpandedData),
-    WidgetTag.flexible.name   : (d) => LayoutWidgets.flexibleFrom(d as FlexibleData),
-    WidgetTag.spacer.name     : (d) => LayoutWidgets.spacerFrom(d as SpacerData),
-    WidgetTag.positioned.name : (d) => LayoutWidgets.positionedFrom(d as PositionedData),
-    WidgetTag.row.name        : (d) => LayoutWidgets.rowFrom(d as RowData),
-    WidgetTag.column.name     : (d) => LayoutWidgets.columnFrom(d as ColumnData),
-    WidgetTag.stack.name      : (d) => LayoutWidgets.stackFrom(d as StackData),
-    WidgetTag.gridView.name   : (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
+    WidgetTag.text       .name: (d) => BaseWidget.textFrom(d as TextData),
+    WidgetTag.image      .name: (d) => BaseWidget.imageFrom(d as ImageData),
+    WidgetTag.button     .name: (d) => BaseWidget.buttonFrom(d as ButtonData),
+    WidgetTag.container  .name: (d) => BaseWidget.containerFrom(d as ContainerData),
+    WidgetTag.divider    .name: (d) => BaseWidget.dividerFrom(d as DividerData),
+    WidgetTag.expanded   .name: (d) => LayoutWidgets.expandedFrom(d as ExpandedData),
+    WidgetTag.flexible   .name: (d) => LayoutWidgets.flexibleFrom(d as FlexibleData),
+    WidgetTag.spacer     .name: (d) => LayoutWidgets.spacerFrom(d as SpacerData),
+    WidgetTag.positioned .name: (d) => LayoutWidgets.positionedFrom(d as PositionedData),
+    WidgetTag.row        .name: (d) => LayoutWidgets.rowFrom(d as RowData),
+    WidgetTag.column     .name: (d) => LayoutWidgets.columnFrom(d as ColumnData),
+    WidgetTag.stack      .name: (d) => LayoutWidgets.stackFrom(d as StackData),
+    WidgetTag.gridView   .name: (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
   };
   // @formatter:on
 
-  /// set builder of [tag], or overwrite existing builder
-  static void setWidgetBuilder(String tag, DynamicViewBuilder builder) {
-    _widgetBuilder[tag] = builder;
+  /// register a tag, or overwrite existing view builder and data parser.
+  static void registerTag(
+    String tag, {
+    required DynamicViewBuilder builder,
+    required WidgetDataParser parser,
+  }) {
+    DynamicView._widgetBuilder[tag] = builder;
+    WidgetData.widgetDataParser[tag] = parser;
   }
 
   static Widget fromMap(Map<String, dynamic> map) {

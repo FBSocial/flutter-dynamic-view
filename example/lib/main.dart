@@ -1,4 +1,16 @@
+import 'dart:convert';
+
+import 'package:dynamic_view/dynamic_view.dart';
+import 'package:dynamic_view/widgets/models/base_widgets.dart';
+import 'package:dynamic_view/widgets/models/layouts.dart';
+import 'package:dynamic_view/widgets/models/widgets.dart';
 import 'package:flutter/material.dart';
+
+String prettyJson(dynamic json) {
+  final spaces = ' ' * 4;
+  final encoder = JsonEncoder.withIndent(spaces);
+  return encoder.convert(json);
+}
 
 void main() {
   runApp(const MyApp());
@@ -47,69 +59,100 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class SampleItem {
+  final String label;
+  final WidgetData data;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  SampleItem(this.label, this.data);
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final samples = [
+    SampleItem(
+      'Text',
+      ColumnData(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        TextData("设置文字大小、颜色和粗体",
+            style: const TextStyleData(
+              fontSize: 16,
+              color: Colors.blue,
+              fontWeight: FontWeightData.medium,
+            )),
+        DividerData(),
+        TextData("设置文字背景颜色",
+            style: const TextStyleData(
+              backgroundColor: Colors.yellow,
+            )),
+        DividerData(),
+        ColumnData(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          TextData(
+            "文字居中对齐",
+            textAlign: TextAlign.center,
+          ),
+          TextData(
+            "文字右对齐",
+            textAlign: TextAlign.right,
+          )
+        ]),
+        DividerData(),
+        TextData(
+          "限制最大 2 行，超出部分显示为省略号。限制最大 2 行，超出部分显示为省略号。限制最大 2 行，超出部分显示为省略号。限制最大 2 行，超出部分显示为省略号。",
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        )
+      ]),
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(widget.title),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+        body: ListView.builder(
+            itemCount: samples.length,
+            itemBuilder: (context, i) {
+              return ListTile(
+                title: Text(samples[i].label),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Scaffold(
+                              appBar: AppBar(
+                                title: Text(samples[i].label),
+                              ),
+                              body: Column(
+                                children: [
+                                  Container(
+                                      margin: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(8.0),
+                                      decoration: BoxDecoration(
+                                          border: Border.all(
+                                              color: Colors.blue, width: 3.0)),
+                                      constraints:
+                                          const BoxConstraints.tightFor(
+                                              height: 300),
+                                      child: SingleChildScrollView(
+                                          child: SelectableText(
+                                              prettyJson(samples[i].data)))),
+                                  Expanded(
+                                      child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.blue, width: 3.0)),
+                                    margin: const EdgeInsets.all(8.0),
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Center(
+                                        child: DynamicView.fromData(
+                                            samples[i].data)),
+                                  )),
+                                ],
+                              ))));
+                },
+              );
+            }));
   }
 }

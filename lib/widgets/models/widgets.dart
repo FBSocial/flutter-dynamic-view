@@ -1,4 +1,3 @@
-import 'package:dynamic_view/widgets/models/advance_widgets.dart';
 import 'package:dynamic_view/widgets/models/json_converters.dart';
 import 'package:flutter/material.dart'
     hide
@@ -52,8 +51,29 @@ extension FanbookWidgetTagExtension on FanbookWidgetTag {
   String get name => toString().substring(17);
 }
 
+typedef WidgetDataParser = WidgetData Function(Map<String, dynamic> json);
+
 @DoubleConverter()
 abstract class WidgetData {
+  // @formatter:off
+  static final Map<String, WidgetDataParser> widgetDataParser = {
+    WidgetTag.aspectRatio.name: (d) => AspectRatioData.fromJson(d),
+    WidgetTag.text       .name: (d) => TextData.fromJson(d),
+    WidgetTag.image      .name: (d) => ImageData.fromJson(d),
+    WidgetTag.button     .name: (d) => ButtonData.fromJson(d),
+    WidgetTag.container  .name: (d) => ContainerData.fromJson(d),
+    WidgetTag.divider    .name: (d) => DividerData.fromJson(d),
+    WidgetTag.expanded   .name: (d) => ExpandedData.fromJson(d),
+    WidgetTag.flexible   .name: (d) => FlexibleData.fromJson(d),
+    WidgetTag.spacer     .name: (d) => SpacerData.fromJson(d),
+    WidgetTag.positioned .name: (d) => PositionedData.fromJson(d),
+    WidgetTag.row        .name: (d) => RowData.fromJson(d),
+    WidgetTag.column     .name: (d) => ColumnData.fromJson(d),
+    WidgetTag.stack      .name: (d) => StackData.fromJson(d),
+    WidgetTag.gridView   .name: (d) => GridViewData.fromJson(d),
+  };
+  // @formatter:on
+
   String tag;
   @JsonKey(fromJson: edgeInsetsFromJson, toJson: edgeInsetsToJson)
   EdgeInsets? padding;
@@ -61,45 +81,12 @@ abstract class WidgetData {
   WidgetData(this.tag, {this.padding});
 
   factory WidgetData.fromJson(Map<String, dynamic> json) {
-    switch (json['tag']) {
-      case WidgetTag.aspectRatio:
-        return AspectRatioData.fromJson(json);
-      case WidgetTag.text:
-        return TextData.fromJson(json);
-      case WidgetTag.image:
-        return ImageData.fromJson(json);
-      case WidgetTag.button:
-        return ButtonData.fromJson(json);
-      case WidgetTag.container:
-        return ContainerData.fromJson(json);
-      case WidgetTag.divider:
-        return DividerData.fromJson(json);
-      case WidgetTag.expanded:
-        return ExpandedData.fromJson(json);
-      case WidgetTag.flexible:
-        return FlexibleData.fromJson(json);
-      case WidgetTag.spacer:
-        return SpacerData.fromJson(json);
-      case WidgetTag.positioned:
-        return PositionedData.fromJson(json);
-      case WidgetTag.row:
-        return RowData.fromJson(json);
-      case WidgetTag.column:
-        return ColumnData.fromJson(json);
-      case WidgetTag.stack:
-        return StackData.fromJson(json);
-      case WidgetTag.gridView:
-        return GridViewData.fromJson(json);
-      case FanbookWidgetTag.markdown:
-        return MarkdownData.fromJson(json);
-      case FanbookWidgetTag.userAvatar:
-        return UserAvatarData.fromJson(json);
-      case FanbookWidgetTag.userName:
-        return UserNameData.fromJson(json);
-      case FanbookWidgetTag.channel:
-        return ChannelNameData.fromJson(json);
+    final parser = widgetDataParser[json['tag']];
+    if (parser == null) {
+      throw Exception('Unknown widget tag: ${json['tag']}');
     }
-    throw Exception('Unknown widget tag: ${json['tag']}');
+
+    return parser(json);
   }
 
   Map<String, dynamic> toJson();
