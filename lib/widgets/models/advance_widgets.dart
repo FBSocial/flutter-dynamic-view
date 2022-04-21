@@ -9,10 +9,10 @@ part 'advance_widgets.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class UserAvatarData extends WidgetData {
-  final String userId;
+  final String id;
   final double? size;
 
-  UserAvatarData(this.userId, {this.size})
+  UserAvatarData(this.id, {this.size})
       : super(FanbookWidgetTag.userAvatar.name);
 
   factory UserAvatarData.fromJson(Map<String, dynamic> json) =>
@@ -24,21 +24,21 @@ class UserAvatarData extends WidgetData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is UserAvatarData && other.userId == userId;
+    return other is UserAvatarData && other.id == id;
   }
 
   @override
   String toString() {
-    return 'UserAvatar{userId: $userId}';
+    return 'UserAvatar{id: $id}';
   }
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class UserNameData extends WidgetData {
-  final String userId;
+  final String id;
   final TextStyleData? style;
 
-  UserNameData(this.userId, {this.style})
+  UserNameData(this.id, {this.style})
       : super(FanbookWidgetTag.userName.name);
 
   factory UserNameData.fromJson(Map<String, dynamic> json) =>
@@ -50,12 +50,12 @@ class UserNameData extends WidgetData {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is UserNameData && other.userId == userId;
+    return other is UserNameData && other.id == id;
   }
 
   @override
   String toString() {
-    return 'UserName{userId: $userId}';
+    return 'UserName{id: $id}';
   }
 }
 
@@ -64,7 +64,7 @@ class ChannelNameData extends WidgetData {
   final String id;
   final TextStyleData? style;
 
-  ChannelNameData(this.id, {this.style}) : super(FanbookWidgetTag.channel.name);
+  ChannelNameData(this.id, {this.style}) : super(FanbookWidgetTag.channelName.name);
 
   factory ChannelNameData.fromJson(Map<String, dynamic> json) =>
       _$ChannelNameDataFromJson(json);

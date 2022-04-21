@@ -40,7 +40,7 @@ enum FanbookWidgetTag {
   markdown,
   userAvatar,
   userName,
-  channel,
+  channelName,
 }
 
 extension WidgetTagExtension on WidgetTag {
