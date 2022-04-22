@@ -22,9 +22,6 @@ class DynamicView {
     WidgetTag.button     .name: (d) => BaseWidget.buttonFrom(d as ButtonData),
     WidgetTag.container  .name: (d) => BaseWidget.containerFrom(d as ContainerData),
     WidgetTag.divider    .name: (d) => BaseWidget.dividerFrom(d as DividerData),
-    WidgetTag.expanded   .name: (d) => LayoutWidgets.expandedFrom(d as ExpandedData),
-    WidgetTag.flexible   .name: (d) => LayoutWidgets.flexibleFrom(d as FlexibleData),
-    WidgetTag.spacer     .name: (d) => LayoutWidgets.spacerFrom(d as SpacerData),
     WidgetTag.positioned .name: (d) => LayoutWidgets.positionedFrom(d as PositionedData),
     WidgetTag.row        .name: (d) => LayoutWidgets.rowFrom(d as RowData),
     WidgetTag.column     .name: (d) => LayoutWidgets.columnFrom(d as ColumnData),
@@ -54,11 +51,14 @@ class DynamicView {
     }
 
     Widget widget = builder(data);
-    if (data.padding != null) {
+    if (data.padding != null && data is! ContainerData) {
       widget = Padding(
         padding: data.padding!,
         child: widget,
       );
+    }
+    if (data.flex != null) {
+      widget = _wrapFlex(data.flex!, widget);
     }
     if (data is MultiChildrenWidget) {
       if (data.textStyle != null) {
@@ -69,6 +69,16 @@ class DynamicView {
       }
     }
     return widget;
+  }
+
+  static Widget _wrapFlex(String flex, Widget child) {
+    final ss = flex.split(" ");
+    final fit = ss[0] == 'loose' ? FlexFit.loose : FlexFit.tight;
+    return Flexible(
+      flex: ss.length > 1 ? int.parse(ss[1]) : 1,
+      fit: fit,
+      child: child,
+    );
   }
 
   static DynamicViewConfig config = DefaultDynamicViewConfig();

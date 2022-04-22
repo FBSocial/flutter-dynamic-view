@@ -5,24 +5,6 @@ import 'package:flutter/widgets.dart';
 class LayoutWidgets {
   LayoutWidgets._();
 
-  static Widget expandedFrom(ExpandedData data) {
-    return Expanded(
-      flex: data.flex ?? 1,
-      child: DynamicView.fromData(data.child!),
-    );
-  }
-
-  static Widget flexibleFrom(FlexibleData data) {
-    return Flexible(
-      flex: data.flex ?? 1,
-      child: DynamicView.fromData(data.child!),
-    );
-  }
-
-  static Widget spacerFrom(SpacerData data) {
-    return Spacer(flex: data.flex ?? 1);
-  }
-
   static Widget positionedFrom(PositionedData data) {
     return Positioned(
       top: data.top,

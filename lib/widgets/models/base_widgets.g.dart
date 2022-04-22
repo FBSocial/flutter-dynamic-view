@@ -8,8 +8,9 @@ part of 'base_widgets.dart';
 
 AspectRatioData _$AspectRatioDataFromJson(Map<String, dynamic> json) =>
     AspectRatioData(
-      ratio: (json['ratio'] as num).toDouble(),
+      ratio: const DoubleConverter().fromJson(json['ratio'] as num),
       child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
+      flex: json['flex'] as String?,
     )
       ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
@@ -26,7 +27,8 @@ Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
-  val['ratio'] = instance.ratio;
+  writeNotNull('flex', instance.flex);
+  writeNotNull('ratio', const DoubleConverter().toJson(instance.ratio));
   val['child'] = instance.child.toJson();
   return val;
 }
@@ -36,7 +38,8 @@ TextStyleData _$TextStyleDataFromJson(Map<String, dynamic> json) =>
       color: const ColorJsonConverter().fromJson(json['color'] as String?),
       backgroundColor: const ColorJsonConverter()
           .fromJson(json['backgroundColor'] as String?),
-      fontSize: const DoubleConverter().fromJson(json['fontSize'] as String?),
+      fontSize:
+          const DoubleOrNullConverter().fromJson(json['fontSize'] as num?),
       fontWeight:
           $enumDecodeNullable(_$FontWeightDataEnumMap, json['fontWeight']),
     );
@@ -53,7 +56,8 @@ Map<String, dynamic> _$TextStyleDataToJson(TextStyleData instance) {
   writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
   writeNotNull('backgroundColor',
       const ColorJsonConverter().toJson(instance.backgroundColor));
-  writeNotNull('fontSize', const DoubleConverter().toJson(instance.fontSize));
+  writeNotNull(
+      'fontSize', const DoubleOrNullConverter().toJson(instance.fontSize));
   writeNotNull('fontWeight', _$FontWeightDataEnumMap[instance.fontWeight]);
   return val;
 }
@@ -73,6 +77,7 @@ TextData _$TextDataFromJson(Map<String, dynamic> json) => TextData(
       overflow: $enumDecodeNullable(_$TextOverflowEnumMap, json['overflow']),
       maxLines: json['maxLines'] as int?,
       padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$TextDataToJson(TextData instance) {
@@ -87,6 +92,7 @@ Map<String, dynamic> _$TextDataToJson(TextData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
   val['data'] = instance.data;
   writeNotNull('style', instance.style?.toJson());
   writeNotNull('textAlign', _$TextAlignEnumMap[instance.textAlign]);
@@ -114,16 +120,17 @@ const _$TextOverflowEnumMap = {
 
 ImageData _$ImageDataFromJson(Map<String, dynamic> json) => ImageData(
       json['src'] as String,
-      width: const DoubleConverter().fromJson(json['width'] as String?),
-      height: const DoubleConverter().fromJson(json['height'] as String?),
+      width: const DoubleOrNullConverter().fromJson(json['width'] as num?),
+      height: const DoubleOrNullConverter().fromJson(json['height'] as num?),
       fit: $enumDecodeNullable(_$BoxFitEnumMap, json['fit']),
       alignment:
           const AlignmentJsonConverter().fromJson(json['alignment'] as String?),
       repeat: $enumDecodeNullable(_$ImageRepeatEnumMap, json['repeat']),
       centerSlice:
           const RectJsonConverter().fromJson(json['centerSlice'] as String?),
-      radius: const DoubleConverter().fromJson(json['radius'] as String?),
+      radius: const DoubleOrNullConverter().fromJson(json['radius'] as num?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ImageDataToJson(ImageData instance) {
@@ -138,16 +145,17 @@ Map<String, dynamic> _$ImageDataToJson(ImageData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
   val['src'] = instance.src;
-  writeNotNull('width', const DoubleConverter().toJson(instance.width));
-  writeNotNull('height', const DoubleConverter().toJson(instance.height));
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   writeNotNull('fit', _$BoxFitEnumMap[instance.fit]);
   writeNotNull(
       'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
   writeNotNull('repeat', _$ImageRepeatEnumMap[instance.repeat]);
   writeNotNull(
       'centerSlice', const RectJsonConverter().toJson(instance.centerSlice));
-  writeNotNull('radius', const DoubleConverter().toJson(instance.radius));
+  writeNotNull('radius', const DoubleOrNullConverter().toJson(instance.radius));
   return val;
 }
 
@@ -175,6 +183,7 @@ ButtonData _$ButtonDataFromJson(Map<String, dynamic> json) => ButtonData(
       href: json['href'] as String?,
       border: const BorderSideConverter().fromJson(json['border'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ButtonDataToJson(ButtonData instance) {
@@ -189,6 +198,7 @@ Map<String, dynamic> _$ButtonDataToJson(ButtonData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
   writeNotNull('child', instance.child?.toJson());
   writeNotNull('type', _$ButtonTypeEnumMap[instance.type]);
   writeNotNull('size', _$ButtonSizeEnumMap[instance.size]);
@@ -213,8 +223,8 @@ const _$ButtonSizeEnumMap = {
 
 BorderData _$BorderDataFromJson(Map<String, dynamic> json) => BorderData(
       color: const ColorJsonConverter().fromJson(json['color'] as String?),
-      width: const DoubleConverter().fromJson(json['width'] as String?),
-      radius: const DoubleConverter().fromJson(json['radius'] as String?),
+      width: const DoubleOrNullConverter().fromJson(json['width'] as num?),
+      radius: const DoubleOrNullConverter().fromJson(json['radius'] as num?),
     );
 
 Map<String, dynamic> _$BorderDataToJson(BorderData instance) {
@@ -227,8 +237,8 @@ Map<String, dynamic> _$BorderDataToJson(BorderData instance) {
   }
 
   writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
-  writeNotNull('width', const DoubleConverter().toJson(instance.width));
-  writeNotNull('radius', const DoubleConverter().toJson(instance.radius));
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('radius', const DoubleOrNullConverter().toJson(instance.radius));
   return val;
 }
 
@@ -237,8 +247,8 @@ ContainerData _$ContainerDataFromJson(Map<String, dynamic> json) =>
       child: json['child'] == null
           ? null
           : WidgetData.fromJson(json['child'] as Map<String, dynamic>),
-      width: const DoubleConverter().fromJson(json['width'] as String?),
-      height: const DoubleConverter().fromJson(json['height'] as String?),
+      width: const DoubleOrNullConverter().fromJson(json['width'] as num?),
+      height: const DoubleOrNullConverter().fromJson(json['height'] as num?),
       border: json['border'] == null
           ? null
           : BorderData.fromJson(json['border'] as Map<String, dynamic>),
@@ -246,7 +256,9 @@ ContainerData _$ContainerDataFromJson(Map<String, dynamic> json) =>
           const AlignmentJsonConverter().fromJson(json['alignment'] as String?),
       backgroundColor: const ColorJsonConverter()
           .fromJson(json['backgroundColor'] as String?),
+      margin: edgeInsetsFromJson(json['margin'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ContainerDataToJson(ContainerData instance) {
@@ -261,20 +273,25 @@ Map<String, dynamic> _$ContainerDataToJson(ContainerData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
   writeNotNull('child', instance.child?.toJson());
-  writeNotNull('width', const DoubleConverter().toJson(instance.width));
-  writeNotNull('height', const DoubleConverter().toJson(instance.height));
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   writeNotNull('border', instance.border?.toJson());
   writeNotNull(
       'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
   writeNotNull('backgroundColor',
       const ColorJsonConverter().toJson(instance.backgroundColor));
+  writeNotNull('margin', edgeInsetsToJson(instance.margin));
   return val;
 }
 
 DividerData _$DividerDataFromJson(Map<String, dynamic> json) => DividerData(
-      thickness: const DoubleConverter().fromJson(json['thickness'] as String?),
+      thickness:
+          const DoubleOrNullConverter().fromJson(json['thickness'] as num?),
       color: const ColorJsonConverter().fromJson(json['color'] as String?),
+      vertical: json['vertical'] as bool?,
+      flex: json['flex'] as String?,
     )
       ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?);
@@ -291,7 +308,10 @@ Map<String, dynamic> _$DividerDataToJson(DividerData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
-  writeNotNull('thickness', const DoubleConverter().toJson(instance.thickness));
+  writeNotNull('flex', instance.flex);
+  writeNotNull(
+      'thickness', const DoubleOrNullConverter().toJson(instance.thickness));
   writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
+  writeNotNull('vertical', instance.vertical);
   return val;
 }

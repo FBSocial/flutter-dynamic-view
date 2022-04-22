@@ -14,6 +14,7 @@ enum FontWeightData {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 class AspectRatioData extends WidgetData {
   final double ratio;
@@ -22,7 +23,8 @@ class AspectRatioData extends WidgetData {
   AspectRatioData({
     required this.ratio,
     required this.child,
-  }) : super(WidgetTag.aspectRatio.name);
+    String? flex,
+  }) : super(WidgetTag.aspectRatio.name, flex: flex);
 
   factory AspectRatioData.fromJson(Map<String, dynamic> json) =>
       _$AspectRatioDataFromJson(json);
@@ -41,6 +43,7 @@ class AspectRatioData extends WidgetData {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 @ColorJsonConverter()
 class TextStyleData {
@@ -78,6 +81,7 @@ class TextStyleData {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 class TextData extends WidgetData {
   final String data;
@@ -99,7 +103,8 @@ class TextData extends WidgetData {
     this.overflow,
     this.maxLines,
     EdgeInsets? padding,
-  }) : super(WidgetTag.text.name, padding: padding);
+    String? flex,
+  }) : super(WidgetTag.text.name, padding: padding, flex: flex);
 
   factory TextData.fromJson(Map<String, dynamic> json) =>
       _$TextDataFromJson(json);
@@ -127,6 +132,7 @@ class TextData extends WidgetData {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 @AlignmentJsonConverter()
 @RectJsonConverter()
@@ -150,7 +156,8 @@ class ImageData extends WidgetData {
     this.centerSlice,
     this.radius,
     EdgeInsets? padding,
-  }) : super(WidgetTag.image.name, padding: padding);
+    String? flex,
+  }) : super(WidgetTag.image.name, padding: padding, flex: flex);
 
   factory ImageData.fromJson(Map<String, dynamic> json) =>
       _$ImageDataFromJson(json);
@@ -192,6 +199,7 @@ enum ButtonSize {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 @BorderSideConverter()
 class ButtonData extends SingleChildWidget {
@@ -207,7 +215,8 @@ class ButtonData extends SingleChildWidget {
     this.href,
     this.border,
     EdgeInsets? padding,
-  }) : super(WidgetTag.button.name, child: child, padding: padding);
+    String? flex,
+  }) : super(WidgetTag.button.name, child: child, padding: padding, flex: flex);
 
   factory ButtonData.fromJson(Map<String, dynamic> json) =>
       _$ButtonDataFromJson(json);
@@ -231,6 +240,7 @@ class ButtonData extends SingleChildWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 @ColorJsonConverter()
 class BorderData {
@@ -265,6 +275,7 @@ class BorderData {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 @AlignmentJsonConverter()
 @ColorJsonConverter()
@@ -274,6 +285,8 @@ class ContainerData extends SingleChildWidget {
   final BorderData? border;
   final Alignment? alignment;
   final Color? backgroundColor;
+  @JsonKey(fromJson: edgeInsetsFromJson, toJson: edgeInsetsToJson)
+  final EdgeInsets? margin;
 
   ContainerData({
     WidgetData? child,
@@ -282,8 +295,11 @@ class ContainerData extends SingleChildWidget {
     this.border,
     this.alignment,
     this.backgroundColor,
+    this.margin,
     EdgeInsets? padding,
-  }) : super(WidgetTag.container.name, child: child, padding: padding);
+    String? flex,
+  }) : super(WidgetTag.container.name,
+            child: child, padding: padding, flex: flex);
 
   factory ContainerData.fromJson(Map<String, dynamic> json) =>
       _$ContainerDataFromJson(json);
@@ -310,16 +326,20 @@ class ContainerData extends SingleChildWidget {
 }
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
 @DoubleConverter()
 @ColorJsonConverter()
 class DividerData extends WidgetData {
   final double? thickness;
   final Color? color;
+  final bool? vertical;
 
   DividerData({
     this.thickness,
     this.color,
-  }) : super(WidgetTag.divider.name);
+    this.vertical,
+    String? flex,
+  }) : super(WidgetTag.divider.name, flex: flex);
 
   factory DividerData.fromJson(Map<String, dynamic> json) =>
       _$DividerDataFromJson(json);
