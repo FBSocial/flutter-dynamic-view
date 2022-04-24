@@ -66,7 +66,7 @@ class AlignmentJsonConverter extends JsonConverter<Alignment?, String?> {
   String? toJson(Alignment? object) {
     if (object == null) return null;
     if (object.x == object.y) {
-      return object.x.toString();
+      return _double2str(object.x);
     } else {
       return '${_double2str(object.x)},${_double2str(object.y)}';
     }
@@ -118,7 +118,7 @@ EdgeInsets? edgeInsetsFromJson(String? json) {
 
 /// convert flutter [EdgeInsets] to the fowllowing string:
 /// 1. `EdgeInsets.all(10)` can be converted to '10'
-/// 2. `EdgeInsets.only(top: 10, left: 20, bottom: 30, right: 40)` can be converted to '10,20,30,40'
+/// 2. `EdgeInsets.only(left: 10, top: 20, right: 30, bottom: 40)` can be converted to '10,20,30,40'
 /// 3. `EdgeInsets.symmetric(horizontal: 20, vertical: 10)` can be converted to '20,10'
 String? edgeInsetsToJson(EdgeInsets? object) {
   if (object == null) return null;
@@ -162,19 +162,41 @@ class BorderSideConverter extends JsonConverter<BorderSide?, String?> {
 }
 
 /// double is converted to string with decimal, even if the decimal part is 0
-/// [DoubleConverter] treat 1.0 as 1
-class DoubleConverter extends JsonConverter<double?, String?> {
-  const DoubleConverter();
+/// [DoubleOrNullConverter] treat 1.0 as 1
+class DoubleOrNullConverter extends JsonConverter<double?, num?> {
+  const DoubleOrNullConverter();
 
   @override
-  double? fromJson(String? json) {
+  double? fromJson(num? json) {
     if (json == null) return null;
-    return double.parse(json);
+    return json.toDouble();
   }
 
   @override
-  String? toJson(double? object) {
+  num? toJson(double? object) {
     if (object == null) return null;
-    return _double2str(object);
+    if (object.toInt() == object) {
+      return object.toInt();
+    } else {
+      return object;
+    }
+  }
+}
+
+class DoubleConverter extends JsonConverter<double, num> {
+  const DoubleConverter();
+
+  @override
+  double fromJson(num json) {
+    return json.toDouble();
+  }
+
+  @override
+  num toJson(double object) {
+    if (object.toInt() == object) {
+      return object.toInt();
+    } else {
+      return object;
+    }
   }
 }

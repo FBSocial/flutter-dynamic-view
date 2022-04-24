@@ -24,18 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -101,6 +90,123 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ]),
     ),
+    SampleItem(
+        "分隔线",
+        ColumnData(children: [
+          TextData("默认分隔线"),
+          DividerData(),
+          TextData("横向分隔线"),
+          DividerData(
+            thickness: 2,
+            color: Colors.blue,
+          ),
+          TextData("纵向分隔线"),
+          ContainerData(
+              height: 100,
+              child: DividerData(
+                thickness: 2,
+                vertical: true,
+                color: Colors.blue,
+              )),
+        ])),
+    SampleItem(
+        "宽高比",
+        ContainerData(
+            border: const BorderData(color: Colors.red),
+            width: 100,
+            height: 300,
+            alignment: Alignment.center,
+            child: AspectRatioData(
+                ratio: 1,
+                child: ContainerData(
+                  backgroundColor: Colors.blue,
+                )))),
+    SampleItem(
+        "容器",
+        ColumnData(children: [
+          ContainerData(
+            width: 100,
+            height: 100,
+            padding: const EdgeInsets.all(8),
+            backgroundColor: Colors.blue,
+            border: const BorderData(
+              color: Colors.red,
+              width: 2,
+              radius: 5,
+            ),
+            alignment: Alignment.center,
+            child: ContainerData(
+              padding: const EdgeInsets.all(8),
+              backgroundColor: Colors.green,
+              border: const BorderData(radius: 5),
+              child: TextData("双层容器"),
+            ),
+          ),
+        ])),
+    SampleItem(
+      "flex",
+      ColumnData(children: [
+        RowData(children: [
+          ContainerData(
+            width: 50,
+            height: 50,
+            flex: "tight",
+            padding: const EdgeInsets.all(8),
+            backgroundColor: Colors.red,
+          ),
+          ContainerData(
+            width: 50,
+            height: 50,
+            padding: const EdgeInsets.all(8),
+            backgroundColor: Colors.green,
+          ),
+        ]),
+        RowData(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          TextData("Item 1"),
+          TextData("Item 2"),
+          TextData("Item 3"),
+          TextData("Item 4"),
+          TextData("Item 5"),
+        ])
+      ]),
+    ),
+    SampleItem(
+        "绝对布局",
+        StackData(children: [
+          ContainerData(
+            width: 300,
+            height: 300,
+            backgroundColor: Colors.blueGrey,
+          ),
+          PositionedData(left: 0, top: 0, child: TextData("左上")),
+          PositionedData(left: 0, bottom: 0, child: TextData("左下")),
+          PositionedData(right: 1, top: 0, child: TextData("右上")),
+          PositionedData(right: 1, bottom: 1, child: TextData("右下")),
+          PositionedData(child: TextData("居中")),
+        ])),
+    SampleItem(
+        "表格布局",
+        ContainerData(
+            height: 200,
+            child: GridViewData(
+              textStyle: const TextStyleData(fontSize: 20, color: Colors.black),
+              crossAxisCount: 3,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 5,
+              childAspectRatio: 2,
+              shrikWrap: true,
+              children: [
+                TextData("1"),
+                TextData("2"),
+                TextData("3"),
+                TextData("4"),
+                TextData("5"),
+                TextData("6"),
+                TextData("7"),
+                TextData("8"),
+                TextData("9"),
+              ],
+            ))),
   ];
 
   @override
@@ -125,6 +231,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 title: Text(samples[i].label),
                               ),
                               body: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Container(
                                       margin: const EdgeInsets.all(8.0),
@@ -132,12 +239,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                       decoration: BoxDecoration(
                                           border: Border.all(
                                               color: Colors.blue, width: 3.0)),
-                                      constraints:
-                                          const BoxConstraints.tightFor(
-                                              height: 300),
-                                      child: SingleChildScrollView(
-                                          child: SelectableText(
-                                              prettyJson(samples[i].data)))),
+                                      height: 300,
+                                      child: SelectableText(
+                                          prettyJson(samples[i].data))),
                                   Expanded(
                                       child: Container(
                                     decoration: BoxDecoration(

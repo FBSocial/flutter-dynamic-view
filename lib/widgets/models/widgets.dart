@@ -25,9 +25,6 @@ enum WidgetTag {
   divider,
   container,
   // layout helpers
-  expanded,
-  flexible,
-  spacer,
   positioned,
   // layouts
   gridView,
@@ -53,7 +50,7 @@ extension FanbookWidgetTagExtension on FanbookWidgetTag {
 
 typedef WidgetDataParser = WidgetData Function(Map<String, dynamic> json);
 
-@DoubleConverter()
+@DoubleOrNullConverter()
 abstract class WidgetData {
   // @formatter:off
   static final Map<String, WidgetDataParser> widgetDataParser = {
@@ -63,9 +60,6 @@ abstract class WidgetData {
     WidgetTag.button     .name: (d) => ButtonData.fromJson(d),
     WidgetTag.container  .name: (d) => ContainerData.fromJson(d),
     WidgetTag.divider    .name: (d) => DividerData.fromJson(d),
-    WidgetTag.expanded   .name: (d) => ExpandedData.fromJson(d),
-    WidgetTag.flexible   .name: (d) => FlexibleData.fromJson(d),
-    WidgetTag.spacer     .name: (d) => SpacerData.fromJson(d),
     WidgetTag.positioned .name: (d) => PositionedData.fromJson(d),
     WidgetTag.row        .name: (d) => RowData.fromJson(d),
     WidgetTag.column     .name: (d) => ColumnData.fromJson(d),
@@ -78,7 +72,12 @@ abstract class WidgetData {
   @JsonKey(fromJson: edgeInsetsFromJson, toJson: edgeInsetsToJson)
   EdgeInsets? padding;
 
-  WidgetData(this.tag, {this.padding});
+  String? flex;
+
+  @JsonKey(ignore: true)
+  WidgetData? parent;
+
+  WidgetData(this.tag, {this.padding, this.flex});
 
   factory WidgetData.fromJson(Map<String, dynamic> json) {
     final parser = widgetDataParser[json['tag']];
@@ -95,8 +94,14 @@ abstract class WidgetData {
 abstract class SingleChildWidget extends WidgetData {
   WidgetData? child;
 
-  SingleChildWidget(String tag, {this.child, EdgeInsets? padding})
-      : super(tag, padding: padding);
+  SingleChildWidget(
+    String tag, {
+    this.child,
+    EdgeInsets? padding,
+    String? flex,
+  }) : super(tag, padding: padding, flex: flex) {
+    child?.parent = this;
+  }
 }
 
 abstract class MultiChildrenWidget extends WidgetData {
@@ -108,5 +113,14 @@ abstract class MultiChildrenWidget extends WidgetData {
     required this.children,
     this.textStyle,
     EdgeInsets? padding,
-  }) : super(tag, padding: padding);
+    String? flex,
+  }) : super(
+          tag,
+          padding: padding,
+          flex: flex,
+        ) {
+    for (var c in children) {
+      c.parent = this;
+    }
+  }
 }

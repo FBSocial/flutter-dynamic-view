@@ -136,6 +136,8 @@ class BaseWidget {
       width: data.width,
       height: data.height,
       alignment: data.alignment,
+      padding: data.padding,
+      margin: data.margin,
       decoration: BoxDecoration(
         color: data.backgroundColor,
         borderRadius: borderRadius,
@@ -146,9 +148,16 @@ class BaseWidget {
   }
 
   static Widget dividerFrom(DividerData data) {
-    return Divider(
-      color: data.color,
-      thickness: data.thickness,
-    );
+    if (data.vertical ?? false) {
+      return VerticalDivider(
+        color: data.color,
+        thickness: data.thickness,
+      );
+    } else {
+      return Divider(
+        color: data.color,
+        thickness: data.thickness,
+      );
+    }
   }
 }
