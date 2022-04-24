@@ -8,11 +8,12 @@ part of 'advance_widgets.dart';
 
 UserAvatarData _$UserAvatarDataFromJson(Map<String, dynamic> json) =>
     UserAvatarData(
-      json['userId'] as String,
+      json['id'] as String,
       size: (json['size'] as num?)?.toDouble(),
     )
       ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+      ..padding = edgeInsetsFromJson(json['padding'] as String?)
+      ..flex = json['flex'] as String?;
 
 Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   final val = <String, dynamic>{
@@ -26,19 +27,21 @@ Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
-  val['userId'] = instance.userId;
+  writeNotNull('flex', instance.flex);
+  val['id'] = instance.id;
   writeNotNull('size', instance.size);
   return val;
 }
 
 UserNameData _$UserNameDataFromJson(Map<String, dynamic> json) => UserNameData(
-      json['userId'] as String,
+      json['id'] as String,
       style: json['style'] == null
           ? null
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
     )
       ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+      ..padding = edgeInsetsFromJson(json['padding'] as String?)
+      ..flex = json['flex'] as String?;
 
 Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
   final val = <String, dynamic>{
@@ -52,7 +55,8 @@ Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
-  val['userId'] = instance.userId;
+  writeNotNull('flex', instance.flex);
+  val['id'] = instance.id;
   writeNotNull('style', instance.style?.toJson());
   return val;
 }
@@ -65,7 +69,8 @@ ChannelNameData _$ChannelNameDataFromJson(Map<String, dynamic> json) =>
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
     )
       ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+      ..padding = edgeInsetsFromJson(json['padding'] as String?)
+      ..flex = json['flex'] as String?;
 
 Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
   final val = <String, dynamic>{
@@ -79,6 +84,7 @@ Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
   val['id'] = instance.id;
   writeNotNull('style', instance.style?.toJson());
   return val;
@@ -89,7 +95,8 @@ MarkdownData _$MarkdownDataFromJson(Map<String, dynamic> json) => MarkdownData(
       shrinkWrap: json['shrinkWrap'] as bool?,
     )
       ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+      ..padding = edgeInsetsFromJson(json['padding'] as String?)
+      ..flex = json['flex'] as String?;
 
 Map<String, dynamic> _$MarkdownDataToJson(MarkdownData instance) {
   final val = <String, dynamic>{
@@ -103,6 +110,7 @@ Map<String, dynamic> _$MarkdownDataToJson(MarkdownData instance) {
   }
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
   val['data'] = instance.data;
   writeNotNull('shrinkWrap', instance.shrinkWrap);
   return val;
