@@ -14,11 +14,9 @@ part 'layouts.g.dart';
 @DoubleOrNullConverter()
 @DoubleConverter()
 class RowData extends MultiChildrenWidget {
-  @JsonKey(name: "hAlign")
   final MainAxisAlignment? mainAxisAlignment;
   @JsonKey(name: "size")
   final MainAxisSize? mainAxisSize;
-  @JsonKey(name: "vAlign")
   final CrossAxisAlignment? crossAxisAlignment;
 
   RowData({
@@ -233,5 +231,52 @@ class GridViewData extends MultiChildrenWidget {
   @override
   String toString() {
     return 'GridView{scrollDirection: $scrollDirection, crossAxisCount: $crossAxisCount, mainAxisSpacing: $mainAxisSpacing, crossAxisSpacing: $crossAxisSpacing, childAspectRatio: $childAspectRatio, children: $children}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
+@DoubleConverter()
+class WrapData extends MultiChildrenWidget {
+  final Axis? direction;
+  final WrapAlignment? alignment;
+  final double? spacing;
+  final WrapAlignment? runAlignment;
+  final double? runSpacing;
+  final WrapCrossAlignment? crossAxisAlignment;
+  final VerticalDirection? verticalDirection;
+
+  WrapData({
+    this.direction,
+    this.alignment,
+    this.spacing,
+    this.runAlignment,
+    this.runSpacing,
+    this.crossAxisAlignment,
+    this.verticalDirection,
+    EdgeInsets? padding,
+    TextStyleData? textStyle,
+    required List<WidgetData> children,
+  }) : super(WidgetTag.wrap.name,
+            children: children, padding: padding, textStyle: textStyle);
+
+  factory WrapData.fromJson(Map<String, dynamic> json) =>
+      _$WrapDataFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$WrapDataToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is WrapData &&
+        direction == other.direction &&
+        alignment == other.alignment &&
+        spacing == other.spacing &&
+        runAlignment == other.runAlignment &&
+        runSpacing == other.runSpacing &&
+        crossAxisAlignment == other.crossAxisAlignment &&
+        verticalDirection == other.verticalDirection &&
+        listEquals(children, other.children);
   }
 }

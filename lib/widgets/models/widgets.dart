@@ -31,6 +31,7 @@ enum WidgetTag {
   row,
   column,
   stack,
+  wrap,
 }
 
 typedef WidgetDataParser = WidgetData Function(Map<String, dynamic> json);

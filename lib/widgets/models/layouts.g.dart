@@ -7,11 +7,11 @@ part of 'layouts.dart';
 // **************************************************************************
 
 RowData _$RowDataFromJson(Map<String, dynamic> json) => RowData(
-      mainAxisAlignment:
-          $enumDecodeNullable(_$MainAxisAlignmentEnumMap, json['hAlign']),
+      mainAxisAlignment: $enumDecodeNullable(
+          _$MainAxisAlignmentEnumMap, json['mainAxisAlignment']),
       mainAxisSize: $enumDecodeNullable(_$MainAxisSizeEnumMap, json['size']),
-      crossAxisAlignment:
-          $enumDecodeNullable(_$CrossAxisAlignmentEnumMap, json['vAlign']),
+      crossAxisAlignment: $enumDecodeNullable(
+          _$CrossAxisAlignmentEnumMap, json['crossAxisAlignment']),
       children: (json['children'] as List<dynamic>)
           .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -37,11 +37,11 @@ Map<String, dynamic> _$RowDataToJson(RowData instance) {
   writeNotNull('flex', instance.flex);
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
-  writeNotNull(
-      'hAlign', _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment]);
+  writeNotNull('mainAxisAlignment',
+      _$MainAxisAlignmentEnumMap[instance.mainAxisAlignment]);
   writeNotNull('size', _$MainAxisSizeEnumMap[instance.mainAxisSize]);
-  writeNotNull(
-      'vAlign', _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment]);
+  writeNotNull('crossAxisAlignment',
+      _$CrossAxisAlignmentEnumMap[instance.crossAxisAlignment]);
   return val;
 }
 
@@ -228,4 +228,76 @@ Map<String, dynamic> _$GridViewDataToJson(GridViewData instance) {
 const _$AxisEnumMap = {
   Axis.horizontal: 'horizontal',
   Axis.vertical: 'vertical',
+};
+
+WrapData _$WrapDataFromJson(Map<String, dynamic> json) => WrapData(
+      direction: $enumDecodeNullable(_$AxisEnumMap, json['direction']),
+      alignment: $enumDecodeNullable(_$WrapAlignmentEnumMap, json['alignment']),
+      spacing: const DoubleOrNullConverter().fromJson(json['spacing'] as num?),
+      runAlignment:
+          $enumDecodeNullable(_$WrapAlignmentEnumMap, json['runAlignment']),
+      runSpacing:
+          const DoubleOrNullConverter().fromJson(json['runSpacing'] as num?),
+      crossAxisAlignment: $enumDecodeNullable(
+          _$WrapCrossAlignmentEnumMap, json['crossAxisAlignment']),
+      verticalDirection: $enumDecodeNullable(
+          _$VerticalDirectionEnumMap, json['verticalDirection']),
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      textStyle: json['textStyle'] == null
+          ? null
+          : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
+      children: (json['children'] as List<dynamic>)
+          .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    )
+      ..tag = json['tag'] as String
+      ..flex = json['flex'] as String?;
+
+Map<String, dynamic> _$WrapDataToJson(WrapData instance) {
+  final val = <String, dynamic>{
+    'tag': instance.tag,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
+  val['children'] = instance.children.map((e) => e.toJson()).toList();
+  writeNotNull('textStyle', instance.textStyle?.toJson());
+  writeNotNull('direction', _$AxisEnumMap[instance.direction]);
+  writeNotNull('alignment', _$WrapAlignmentEnumMap[instance.alignment]);
+  writeNotNull(
+      'spacing', const DoubleOrNullConverter().toJson(instance.spacing));
+  writeNotNull('runAlignment', _$WrapAlignmentEnumMap[instance.runAlignment]);
+  writeNotNull(
+      'runSpacing', const DoubleOrNullConverter().toJson(instance.runSpacing));
+  writeNotNull('crossAxisAlignment',
+      _$WrapCrossAlignmentEnumMap[instance.crossAxisAlignment]);
+  writeNotNull('verticalDirection',
+      _$VerticalDirectionEnumMap[instance.verticalDirection]);
+  return val;
+}
+
+const _$WrapAlignmentEnumMap = {
+  WrapAlignment.start: 'start',
+  WrapAlignment.end: 'end',
+  WrapAlignment.center: 'center',
+  WrapAlignment.spaceBetween: 'spaceBetween',
+  WrapAlignment.spaceAround: 'spaceAround',
+  WrapAlignment.spaceEvenly: 'spaceEvenly',
+};
+
+const _$WrapCrossAlignmentEnumMap = {
+  WrapCrossAlignment.start: 'start',
+  WrapCrossAlignment.end: 'end',
+  WrapCrossAlignment.center: 'center',
+};
+
+const _$VerticalDirectionEnumMap = {
+  VerticalDirection.up: 'up',
+  VerticalDirection.down: 'down',
 };
