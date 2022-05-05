@@ -31,6 +31,7 @@ enum WidgetTag {
   row,
   column,
   stack,
+  wrap,
 }
 
 enum FanbookWidgetTag {

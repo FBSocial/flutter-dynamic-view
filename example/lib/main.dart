@@ -207,6 +207,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 TextData("9"),
               ],
             ))),
+    SampleItem(
+        "流式布局",
+        ContainerData(
+            width: 200,
+            child: WrapData(spacing: 20, runSpacing: 10, children: [
+              ContainerData(
+                  width: 50, height: 50, backgroundColor: Colors.primaries[0]),
+              ContainerData(
+                  width: 100, height: 50, backgroundColor: Colors.primaries[1]),
+              ContainerData(
+                  width: 50, height: 50, backgroundColor: Colors.primaries[2]),
+              ContainerData(
+                  width: 40, height: 50, backgroundColor: Colors.primaries[3]),
+              ContainerData(
+                  width: 50, height: 50, backgroundColor: Colors.primaries[4]),
+              ContainerData(
+                  width: 80, height: 50, backgroundColor: Colors.primaries[5]),
+              ContainerData(
+                  width: 50, height: 50, backgroundColor: Colors.primaries[6]),
+              ContainerData(
+                  width: 150, height: 50, backgroundColor: Colors.primaries[7]),
+            ]))),
   ];
 
   @override
