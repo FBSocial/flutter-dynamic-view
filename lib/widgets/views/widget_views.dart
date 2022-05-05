@@ -27,6 +27,8 @@ class DynamicView {
     WidgetTag.column     .name: (d) => LayoutWidgets.columnFrom(d as ColumnData),
     WidgetTag.stack      .name: (d) => LayoutWidgets.stackFrom(d as StackData),
     WidgetTag.gridView   .name: (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
+    WidgetTag.gridView   .name: (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
+    WidgetTag.wrap       .name: (d) => LayoutWidgets.wrapFrom(d as WrapData),
   };
   // @formatter:on
 
