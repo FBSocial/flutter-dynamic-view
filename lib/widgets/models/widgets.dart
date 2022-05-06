@@ -31,6 +31,7 @@ enum WidgetTag {
   row,
   column,
   stack,
+  wrap,
 }
 
 enum FanbookWidgetTag {
@@ -55,16 +56,17 @@ abstract class WidgetData {
   // @formatter:off
   static final Map<String, WidgetDataParser> widgetDataParser = {
     WidgetTag.aspectRatio.name: (d) => AspectRatioData.fromJson(d),
-    WidgetTag.text       .name: (d) => TextData.fromJson(d),
-    WidgetTag.image      .name: (d) => ImageData.fromJson(d),
-    WidgetTag.button     .name: (d) => ButtonData.fromJson(d),
-    WidgetTag.container  .name: (d) => ContainerData.fromJson(d),
-    WidgetTag.divider    .name: (d) => DividerData.fromJson(d),
-    WidgetTag.positioned .name: (d) => PositionedData.fromJson(d),
-    WidgetTag.row        .name: (d) => RowData.fromJson(d),
-    WidgetTag.column     .name: (d) => ColumnData.fromJson(d),
-    WidgetTag.stack      .name: (d) => StackData.fromJson(d),
-    WidgetTag.gridView   .name: (d) => GridViewData.fromJson(d),
+    WidgetTag.text.name: (d) => TextData.fromJson(d),
+    WidgetTag.image.name: (d) => ImageData.fromJson(d),
+    WidgetTag.button.name: (d) => ButtonData.fromJson(d),
+    WidgetTag.container.name: (d) => ContainerData.fromJson(d),
+    WidgetTag.divider.name: (d) => DividerData.fromJson(d),
+    WidgetTag.positioned.name: (d) => PositionedData.fromJson(d),
+    WidgetTag.row.name: (d) => RowData.fromJson(d),
+    WidgetTag.column.name: (d) => ColumnData.fromJson(d),
+    WidgetTag.stack.name: (d) => StackData.fromJson(d),
+    WidgetTag.gridView.name: (d) => GridViewData.fromJson(d),
+    WidgetTag.wrap.name: (d) => WrapData.fromJson(d),
   };
   // @formatter:on
 

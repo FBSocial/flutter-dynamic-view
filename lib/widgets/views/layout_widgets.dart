@@ -47,7 +47,8 @@ class LayoutWidgets {
 
   static Widget gridViewFrom(GridViewData data) {
     return GridView.count(
-      physics: data.shrikWrap == false ? null : const NeverScrollableScrollPhysics(),
+      physics:
+          data.shrikWrap == false ? null : const NeverScrollableScrollPhysics(),
       shrinkWrap: data.shrikWrap ?? true,
       scrollDirection: data.scrollDirection ?? Axis.vertical,
       crossAxisCount: data.crossAxisCount,
@@ -55,6 +56,20 @@ class LayoutWidgets {
       crossAxisSpacing: data.crossAxisSpacing ?? 0,
       childAspectRatio: data.childAspectRatio ?? 1,
       padding: data.padding ?? EdgeInsets.zero,
+      children:
+          data.children.map((child) => DynamicView.fromData(child)).toList(),
+    );
+  }
+
+  static Widget wrapFrom(WrapData data) {
+    return Wrap(
+      direction: data.direction ?? Axis.horizontal,
+      alignment: data.alignment ?? WrapAlignment.start,
+      spacing: data.spacing ?? 0.0,
+      runAlignment: data.runAlignment ?? WrapAlignment.start,
+      runSpacing: data.runSpacing ?? 0.0,
+      crossAxisAlignment: data.crossAxisAlignment ?? WrapCrossAlignment.start,
+      verticalDirection: data.verticalDirection ?? VerticalDirection.down,
       children:
           data.children.map((child) => DynamicView.fromData(child)).toList(),
     );
