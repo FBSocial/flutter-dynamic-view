@@ -280,3 +280,37 @@ class WrapData extends MultiChildrenWidget {
         listEquals(children, other.children);
   }
 }
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+class KeySetData extends WidgetData {
+  final String key;
+  final WidgetData yes;
+  final WidgetData no;
+
+  KeySetData({
+    required this.key,
+    required this.yes,
+    required this.no,
+    EdgeInsets? padding,
+    String? flex,
+  }) : super(
+          FanbookWidgetTag.keySet.name,
+          padding: padding,
+          flex: flex,
+        );
+
+  factory KeySetData.fromJson(Map<String, dynamic> json) =>
+      _$KeySetDataFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() => _$KeySetDataToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is KeySetData &&
+        key == other.key &&
+        yes == other.yes &&
+        no == other.no;
+  }
+}

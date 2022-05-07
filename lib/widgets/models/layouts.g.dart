@@ -301,3 +301,30 @@ const _$VerticalDirectionEnumMap = {
   VerticalDirection.up: 'up',
   VerticalDirection.down: 'down',
 };
+
+KeySetData _$KeySetDataFromJson(Map<String, dynamic> json) => KeySetData(
+      key: json['key'] as String,
+      yes: WidgetData.fromJson(json['yes'] as Map<String, dynamic>),
+      no: WidgetData.fromJson(json['no'] as Map<String, dynamic>),
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
+    )..tag = json['tag'] as String;
+
+Map<String, dynamic> _$KeySetDataToJson(KeySetData instance) {
+  final val = <String, dynamic>{
+    'tag': instance.tag,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('padding', edgeInsetsToJson(instance.padding));
+  writeNotNull('flex', instance.flex);
+  val['key'] = instance.key;
+  val['yes'] = instance.yes.toJson();
+  val['no'] = instance.no.toJson();
+  return val;
+}

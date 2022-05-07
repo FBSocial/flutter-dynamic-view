@@ -39,6 +39,7 @@ enum FanbookWidgetTag {
   userAvatar,
   userName,
   channelName,
+  keySet,
 }
 
 extension WidgetTagExtension on WidgetTag {
