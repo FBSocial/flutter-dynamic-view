@@ -59,7 +59,8 @@ class DynamicView {
         child: widget,
       );
     }
-    if (data.flex != null) {
+    if (data.flex != null &&
+        (data.parent is RowData || data.parent is ColumnData)) {
       widget = _wrapFlex(data.flex!, widget);
     }
     if (data is MultiChildrenWidget) {
