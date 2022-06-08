@@ -142,6 +142,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: TextData("双层容器"),
             ),
           ),
+          ContainerData(
+              backgroundColor: Colors.yellowAccent,
+              constraints: const BoxConstraints(minHeight: 100),
+              child: TextData("设置了最小高度")),
         ])),
     SampleItem(
       "flex",

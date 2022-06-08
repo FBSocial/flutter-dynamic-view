@@ -282,9 +282,11 @@ class BorderData {
 @DoubleConverter()
 @AlignmentJsonConverter()
 @ColorJsonConverter()
+@BoxConstraintsConverter()
 class ContainerData extends SingleChildWidget {
   final double? width;
   final double? height;
+  final BoxConstraints? constraints;
   final BorderData? border;
   final Alignment? alignment;
   final Color? backgroundColor;
@@ -295,6 +297,7 @@ class ContainerData extends SingleChildWidget {
     WidgetData? child,
     this.width,
     this.height,
+    this.constraints,
     this.border,
     this.alignment,
     this.backgroundColor,
@@ -318,13 +321,14 @@ class ContainerData extends SingleChildWidget {
         height == other.height &&
         border == other.border &&
         alignment == other.alignment &&
+        constraints == other.constraints &&
         backgroundColor == other.backgroundColor &&
         child == other.child;
   }
 
   @override
   String toString() {
-    return 'Container{width: $width, height: $height, border: $border, alignment: $alignment, backgroundColor: $backgroundColor, child: $child}';
+    return 'Container{width: $width, height: $height, constraints: $constraints, border: $border, alignment: $alignment, backgroundColor: $backgroundColor, child: $child}';
   }
 }
 

@@ -5,10 +5,43 @@ import 'package:json_annotation/json_annotation.dart';
 /// which converts flutter built-in types to json
 
 String _double2str(double v) {
+  if (v.isInfinite) return 'infinity';
   if (v.toInt() == v) {
     return '${v.toInt()}';
   }
   return v.toString();
+}
+
+class BoxConstraintsConverter extends JsonConverter<BoxConstraints?, String?> {
+  const BoxConstraintsConverter();
+
+  @override
+  BoxConstraints? fromJson(String? json) {
+    if (json == null) {
+      return null;
+    }
+    final v = json.split(',');
+    if (v.isEmpty) return null;
+
+    return BoxConstraints(
+      minWidth: double.tryParse(v[0]) ?? 0,
+      minHeight: v.length > 1 ? (double.tryParse(v[1]) ?? 0) : 0,
+      maxWidth: v.length > 2
+          ? (double.tryParse(v[2]) ?? double.infinity)
+          : double.infinity,
+      maxHeight: v.length > 3
+          ? (double.tryParse(v[3]) ?? double.infinity)
+          : double.infinity,
+    );
+  }
+
+  @override
+  String? toJson(BoxConstraints? object) {
+    if (object == null) {
+      return null;
+    }
+    return '${_double2str(object.minWidth)},${_double2str(object.minHeight)},${_double2str(object.maxWidth)},${_double2str(object.maxHeight)}';
+  }
 }
 
 /// convert flutter [Color] to css-style string

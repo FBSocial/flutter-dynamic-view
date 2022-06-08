@@ -135,6 +135,7 @@ class BaseWidget {
     return Container(
       width: data.width,
       height: data.height,
+      constraints: data.constraints,
       alignment: data.alignment,
       padding: data.padding,
       margin: data.margin,

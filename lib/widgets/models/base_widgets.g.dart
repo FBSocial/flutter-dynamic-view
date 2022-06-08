@@ -249,6 +249,8 @@ ContainerData _$ContainerDataFromJson(Map<String, dynamic> json) =>
           : WidgetData.fromJson(json['child'] as Map<String, dynamic>),
       width: const DoubleOrNullConverter().fromJson(json['width'] as num?),
       height: const DoubleOrNullConverter().fromJson(json['height'] as num?),
+      constraints: const BoxConstraintsConverter()
+          .fromJson(json['constraints'] as String?),
       border: json['border'] == null
           ? null
           : BorderData.fromJson(json['border'] as Map<String, dynamic>),
@@ -277,6 +279,8 @@ Map<String, dynamic> _$ContainerDataToJson(ContainerData instance) {
   writeNotNull('child', instance.child?.toJson());
   writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
   writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
+  writeNotNull('constraints',
+      const BoxConstraintsConverter().toJson(instance.constraints));
   writeNotNull('border', instance.border?.toJson());
   writeNotNull(
       'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
