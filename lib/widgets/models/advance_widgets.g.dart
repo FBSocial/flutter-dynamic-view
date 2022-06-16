@@ -10,10 +10,9 @@ UserAvatarData _$UserAvatarDataFromJson(Map<String, dynamic> json) =>
     UserAvatarData(
       json['id'] as String,
       size: (json['size'] as num?)?.toDouble(),
-    )
-      ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?)
-      ..flex = json['flex'] as String?;
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   final val = <String, dynamic>{
@@ -38,10 +37,9 @@ UserNameData _$UserNameDataFromJson(Map<String, dynamic> json) => UserNameData(
       style: json['style'] == null
           ? null
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
-    )
-      ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?)
-      ..flex = json['flex'] as String?;
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
   final val = <String, dynamic>{
@@ -67,10 +65,9 @@ ChannelNameData _$ChannelNameDataFromJson(Map<String, dynamic> json) =>
       style: json['style'] == null
           ? null
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
-    )
-      ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?)
-      ..flex = json['flex'] as String?;
+      padding: edgeInsetsFromJson(json['padding'] as String?),
+      flex: json['flex'] as String?,
+    )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
   final val = <String, dynamic>{
