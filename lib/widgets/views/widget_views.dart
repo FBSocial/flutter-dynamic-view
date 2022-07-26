@@ -16,19 +16,24 @@ class DynamicView {
 
   // @formatter:off
   static final Map<String, DynamicViewBuilder> _widgetBuilder = {
-    WidgetTag.aspectRatio.name: (d) => BaseWidget.aspectRatioFrom(d as AspectRatioData),
-    WidgetTag.text       .name: (d) => BaseWidget.textFrom(d as TextData),
-    WidgetTag.image      .name: (d) => BaseWidget.imageFrom(d as ImageData),
-    WidgetTag.button     .name: (d) => BaseWidget.buttonFrom(d as ButtonData),
-    WidgetTag.container  .name: (d) => BaseWidget.containerFrom(d as ContainerData),
-    WidgetTag.divider    .name: (d) => BaseWidget.dividerFrom(d as DividerData),
-    WidgetTag.positioned .name: (d) => LayoutWidgets.positionedFrom(d as PositionedData),
-    WidgetTag.row        .name: (d) => LayoutWidgets.rowFrom(d as RowData),
-    WidgetTag.column     .name: (d) => LayoutWidgets.columnFrom(d as ColumnData),
-    WidgetTag.stack      .name: (d) => LayoutWidgets.stackFrom(d as StackData),
-    WidgetTag.gridView   .name: (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
-    WidgetTag.gridView   .name: (d) => LayoutWidgets.gridViewFrom(d as GridViewData),
-    WidgetTag.wrap       .name: (d) => LayoutWidgets.wrapFrom(d as WrapData),
+    WidgetTag.aspectRatio.name: (d) =>
+        BaseWidget.aspectRatioFrom(d as AspectRatioData),
+    WidgetTag.text.name: (d) => BaseWidget.textFrom(d as TextData),
+    WidgetTag.image.name: (d) => BaseWidget.imageFrom(d as ImageData),
+    WidgetTag.button.name: (d) => BaseWidget.buttonFrom(d as ButtonData),
+    WidgetTag.container.name: (d) =>
+        BaseWidget.containerFrom(d as ContainerData),
+    WidgetTag.divider.name: (d) => BaseWidget.dividerFrom(d as DividerData),
+    WidgetTag.positioned.name: (d) =>
+        LayoutWidgets.positionedFrom(d as PositionedData),
+    WidgetTag.row.name: (d) => LayoutWidgets.rowFrom(d as RowData),
+    WidgetTag.column.name: (d) => LayoutWidgets.columnFrom(d as ColumnData),
+    WidgetTag.stack.name: (d) => LayoutWidgets.stackFrom(d as StackData),
+    WidgetTag.gridView.name: (d) =>
+        LayoutWidgets.gridViewFrom(d as GridViewData),
+    WidgetTag.gridView.name: (d) =>
+        LayoutWidgets.gridViewFrom(d as GridViewData),
+    WidgetTag.wrap.name: (d) => LayoutWidgets.wrapFrom(d as WrapData),
   };
   // @formatter:on
 
@@ -53,7 +58,7 @@ class DynamicView {
     }
 
     Widget widget = builder(data);
-    if (data.padding != null && data is! ContainerData) {
+    if (data.padding != null && data is! ContainerData && data is! ButtonData) {
       widget = Padding(
         padding: data.padding!,
         child: widget,

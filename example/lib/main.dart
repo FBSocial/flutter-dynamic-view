@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:dynamic_view/dynamic_view.dart';
+import 'package:dynamic_view/dynamic_view.dart' hide Scaffold;
+import 'package:dynamic_view/dynamic_view.dart' as dv;
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
 import 'package:dynamic_view/widgets/models/widgets.dart';
@@ -12,6 +13,27 @@ String prettyJson(dynamic json) {
   return encoder.convert(json);
 }
 
+final advanceWidgetSamples = [
+  SampleItem(
+      "脚手架",
+      dv.ScaffoldData(
+          body: ColumnData(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextData(
+                  "在Fanbok使用、服务器配置、运营策略等方 面，如有任何疑问，欢迎联系Fanbook团队",
+                  padding: const EdgeInsets.only(bottom: 16),
+                ),
+                ButtonData(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: TextData("联系Fanbook官方",
+                        style: const TextStyleData(
+                            fontWeight: FontWeightData.normal)),
+                    type: ButtonType.outlined)
+              ]),
+          header: dv.ScaffoldHeader(
+              title: "你的专属运营支持", template: dv.ScaffoldHeaderTemplate.blue))),
+];
 void main() {
   runApp(const MyApp());
 }
@@ -50,7 +72,7 @@ class MyHomePage extends StatefulWidget {
 
 class SampleItem {
   final String label;
-  final WidgetData data;
+  final Object data;
 
   SampleItem(this.label, this.data);
 }
@@ -243,46 +265,106 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: ListView.builder(
-            itemCount: samples.length,
-            itemBuilder: (context, i) {
-              return ListTile(
-                title: Text(samples[i].label),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Scaffold(
-                              appBar: AppBar(
-                                title: Text(samples[i].label),
-                              ),
-                              body: Column(
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Container(
-                                      margin: const EdgeInsets.all(8.0),
-                                      padding: const EdgeInsets.all(8.0),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              color: Colors.blue, width: 3.0)),
-                                      height: 300,
-                                      child: SelectableText(
-                                          prettyJson(samples[i].data))),
-                                  Expanded(
-                                      child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.blue, width: 3.0)),
-                                    margin: const EdgeInsets.all(8.0),
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                        child: DynamicView.fromData(
-                                            samples[i].data)),
-                                  )),
-                                ],
-                              ))));
-                },
-              );
-            }));
+        body: Row(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                  itemCount: samples.length,
+                  itemBuilder: (context, i) {
+                    return ListTile(
+                      title: Text(samples[i].label),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Scaffold(
+                                    appBar: AppBar(
+                                      title: Text(samples[i].label),
+                                    ),
+                                    body: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Container(
+                                            margin: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(8.0),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 3.0)),
+                                            height: 300,
+                                            child: SelectableText(
+                                                prettyJson(samples[i].data))),
+                                        Expanded(
+                                            child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.blue,
+                                                  width: 3.0)),
+                                          margin: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(
+                                              child: DynamicView.fromData(
+                                                  samples[i].data
+                                                      as WidgetData)),
+                                        )),
+                                      ],
+                                    ))));
+                      },
+                    );
+                  }),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: advanceWidgetSamples.length,
+                  itemBuilder: ((context, index) {
+                    return ListTile(
+                      title: Text(advanceWidgetSamples[index].label),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Scaffold(
+                                    appBar: AppBar(
+                                      title: Text(
+                                          advanceWidgetSamples[index].label),
+                                    ),
+                                    body: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.stretch,
+                                      children: [
+                                        Container(
+                                            margin: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(8.0),
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 3.0)),
+                                            height: 300,
+                                            child: SelectableText(prettyJson(
+                                                advanceWidgetSamples[index]
+                                                    .data))),
+                                        Expanded(
+                                            child: Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.blue,
+                                                  width: 3.0)),
+                                          margin: const EdgeInsets.all(8.0),
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Center(
+                                              child: dv.Scaffold(
+                                                  advanceWidgetSamples[index]
+                                                          .data
+                                                      as dv.ScaffoldData)),
+                                        )),
+                                      ],
+                                    ))));
+                      },
+                    );
+                  })),
+            ),
+          ],
+        ));
   }
 }
