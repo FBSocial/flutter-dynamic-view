@@ -303,9 +303,14 @@ const _$VerticalDirectionEnumMap = {
 };
 
 KeySetData _$KeySetDataFromJson(Map<String, dynamic> json) => KeySetData(
-      key: json['key'] as String,
-      yes: WidgetData.fromJson(json['yes'] as Map<String, dynamic>),
-      no: WidgetData.fromJson(json['no'] as Map<String, dynamic>),
+      key: json['key'] as String?,
+      yes: json['yes'] == null
+          ? null
+          : WidgetData.fromJson(json['yes'] as Map<String, dynamic>),
+      no: json['no'] == null
+          ? null
+          : WidgetData.fromJson(json['no'] as Map<String, dynamic>),
+      anyone: json['anyone'] as bool?,
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
     )..tag = json['tag'] as String;
@@ -323,8 +328,9 @@ Map<String, dynamic> _$KeySetDataToJson(KeySetData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
-  val['key'] = instance.key;
-  val['yes'] = instance.yes.toJson();
-  val['no'] = instance.no.toJson();
+  writeNotNull('key', instance.key);
+  writeNotNull('anyone', instance.anyone);
+  writeNotNull('yes', instance.yes?.toJson());
+  writeNotNull('no', instance.no?.toJson());
   return val;
 }

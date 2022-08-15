@@ -35,6 +35,7 @@ class DynamicView {
         LayoutWidgets.gridViewFrom(d as GridViewData),
     WidgetTag.wrap.name: (d) => LayoutWidgets.wrapFrom(d as WrapData),
   };
+
   // @formatter:on
 
   /// register a tag, or overwrite existing view builder and data parser.
@@ -46,6 +47,8 @@ class DynamicView {
     DynamicView._widgetBuilder[tag] = builder;
     WidgetData.widgetDataParser[tag] = parser;
   }
+
+  static DynamicViewBuilder? getBuilder(String tag) => DynamicView._widgetBuilder[tag];
 
   static Widget fromMap(Map<String, dynamic> map) {
     return fromData(WidgetData.fromJson(map));

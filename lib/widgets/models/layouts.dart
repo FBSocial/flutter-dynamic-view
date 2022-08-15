@@ -283,14 +283,16 @@ class WrapData extends MultiChildrenWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class KeySetData extends WidgetData {
-  final String key;
-  final WidgetData yes;
-  final WidgetData no;
+  final String? key;
+  final bool? anyone;
+  final WidgetData? yes;
+  final WidgetData? no;
 
   KeySetData({
-    required this.key,
-    required this.yes,
-    required this.no,
+    this.key,
+    this.yes,
+    this.no,
+    this.anyone,
     EdgeInsets? padding,
     String? flex,
   }) : super(
