@@ -1,3 +1,4 @@
+import 'package:dynamic_view/src/string_extension.dart';
 import 'package:dynamic_view/widgets/models/advance_widgets.dart';
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
@@ -52,7 +53,7 @@ class Team extends StatelessWidget {
         children: [
           // 游戏标题
           Text(
-            data.header,
+            data.header.breakWord,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style:
@@ -103,7 +104,9 @@ class Team extends StatelessWidget {
                           ]),
                     ),
                     child: Text(
-                      data.annotation!,
+                      data.annotation!.breakWord,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 14,
