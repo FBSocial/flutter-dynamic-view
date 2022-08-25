@@ -6,15 +6,19 @@ class LayoutWidgets {
   LayoutWidgets._();
 
   static Widget positionedFrom(PositionedData data) {
-    return Positioned(
-      top: data.top,
-      right: data.right,
-      bottom: data.bottom,
-      left: data.left,
-      width: data.width,
-      height: data.height,
-      child: DynamicView.fromData(data.child!),
-    );
+    if (data.parent is StackData) {
+      return Positioned(
+        top: data.top,
+        right: data.right,
+        bottom: data.bottom,
+        left: data.left,
+        width: data.width,
+        height: data.height,
+        child: DynamicView.fromData(data.child!),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   static Widget rowFrom(RowData data) {
