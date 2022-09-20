@@ -1,11 +1,12 @@
+import 'package:dynamic_view/dynamic_view.dart';
 import 'package:dynamic_view/src/string_extension.dart';
 import 'package:dynamic_view/widgets/models/advance_widgets.dart';
 import 'package:dynamic_view/widgets/models/base_widgets.dart';
 import 'package:dynamic_view/widgets/models/layouts.dart';
 import 'package:dynamic_view/widgets/models/widgets.dart';
-import 'package:dynamic_view/widgets/views/widget_views.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'team.g.dart';
 
@@ -14,13 +15,19 @@ const kKeyReversedStartFrom = 98;
 const kKeyDissolved = '99';
 const kKeyStarted = '98';
 
+Uri _appendQuery(Uri uri, Map<String, String> query) {
+  final newQuery = Map<String, String>.from(uri.queryParameters);
+  newQuery.addAll(query);
+  return uri.replace(queryParameters: newQuery);
+}
+
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 class TeamData {
   final String header;
-  final int maxPlayers;
   final String cover;
   final String gameUrl;
   final String? playAgainUrl;
+  final String? fallbackUrl;
   final String? annotation;
 
   TeamData({
@@ -28,8 +35,8 @@ class TeamData {
     required this.cover,
     required this.gameUrl,
     this.playAgainUrl,
+    this.fallbackUrl,
     this.annotation,
-    this.maxPlayers = 5,
   });
 
   factory TeamData.fromJson(Map<String, dynamic> json) =>
@@ -41,7 +48,10 @@ class TeamData {
 class Team extends StatelessWidget {
   final TeamData data;
 
-  const Team(this.data, {Key? key}) : super(key: key);
+  final Map<String, String> Function() extraQueries;
+
+  const Team(this.data, {Key? key, required this.extraQueries})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +68,8 @@ class Team extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style:
                 TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
-          ),
-          // 用户头像有 2pt 边框，加起来有 12 间隔
-          const SizedBox(height: 10),
-          // 玩家头像列表 & 游戏状态
+          ), // 用户头像有 2pt 边框，加起来有 12 间隔
+          const SizedBox(height: 10), // 玩家头像列表 & 游戏状态
           SizedBox(
             height: 24,
             child: Row(
@@ -70,10 +78,8 @@ class Team extends StatelessWidget {
                 _buildStateText(context),
               ],
             ),
-          ),
-          // 用户头像有 2pt 边框，加起来有 12 间隔
-          const SizedBox(height: 10),
-          // 游戏封面
+          ), // 用户头像有 2pt 边框，加起来有 12 间隔
+          const SizedBox(height: 10), // 游戏封面
           Stack(
             children: [
               AspectRatio(
@@ -134,7 +140,7 @@ class Team extends StatelessWidget {
     BorderSide? border;
     ButtonType buttonType;
     String buttonLabel;
-    String href;
+    Uri href;
     final keys = DynamicView.config.extractKeys(context);
 
     String? hasAnyKeyMySelf() {
@@ -151,7 +157,7 @@ class Team extends StatelessWidget {
       if (data.playAgainUrl == null) return const SizedBox();
       buttonType = ButtonType.outlined;
       buttonLabel = "再来一局";
-      href = data.playAgainUrl!;
+      href = _appendQuery(Uri.parse(data.playAgainUrl!), extraQueries());
     } else if (keys.containsKey(kKeyStarted)) {
       return const SizedBox();
     } else {
@@ -159,19 +165,35 @@ class Team extends StatelessWidget {
         buttonType = ButtonType.outlined;
         border = BorderSide(color: Theme.of(context).primaryColor, width: 0.5);
         buttonLabel = "进入游戏";
-        href = data.gameUrl;
       } else {
         buttonType = ButtonType.elevated;
         buttonLabel = "立即加入";
-        href = "fanbook://key/set/auto?max=${data.maxPlayers}";
+      }
+      href = _appendQuery(Uri.parse(data.gameUrl), extraQueries());
+    }
+
+    void launchGame() async {
+      if (href.scheme == 'http' ||
+          href.scheme == 'https' ||
+          href.scheme == 'fanbook') {
+        DynamicViewHrefNotification(href.toString()).dispatch(context);
+      } else {
+        if (!await launchUrl(href)) {
+          if (data.fallbackUrl != null) {
+            DynamicViewHrefNotification(data.fallbackUrl!).dispatch(context);
+          }
+        }
       }
     }
-    return DynamicView.fromData(ButtonData(
-      type: buttonType,
-      border: border,
-      child: TextData(buttonLabel),
-      href: href,
-    ));
+
+    if (buttonType == ButtonType.outlined) {
+      return OutlinedButton(
+          style: OutlinedButton.styleFrom(side: border),
+          onPressed: launchGame,
+          child: Text(buttonLabel));
+    } else {
+      return ElevatedButton(onPressed: launchGame, child: Text(buttonLabel));
+    }
   }
 
   Widget _avatarWrapper(Widget child) {

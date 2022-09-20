@@ -11,14 +11,13 @@ TeamData _$TeamDataFromJson(Map<String, dynamic> json) => TeamData(
       cover: json['cover'] as String,
       gameUrl: json['gameUrl'] as String,
       playAgainUrl: json['playAgainUrl'] as String?,
+      fallbackUrl: json['fallbackUrl'] as String?,
       annotation: json['annotation'] as String?,
-      maxPlayers: json['maxPlayers'] as int? ?? 5,
     );
 
 Map<String, dynamic> _$TeamDataToJson(TeamData instance) {
   final val = <String, dynamic>{
     'header': instance.header,
-    'maxPlayers': instance.maxPlayers,
     'cover': instance.cover,
     'gameUrl': instance.gameUrl,
   };
@@ -30,6 +29,7 @@ Map<String, dynamic> _$TeamDataToJson(TeamData instance) {
   }
 
   writeNotNull('playAgainUrl', instance.playAgainUrl);
+  writeNotNull('fallbackUrl', instance.fallbackUrl);
   writeNotNull('annotation', instance.annotation);
   return val;
 }
