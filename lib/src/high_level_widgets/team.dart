@@ -14,6 +14,7 @@ const kMaxAvatars = 5;
 const kKeyReversedStartFrom = 98;
 const kKeyDissolved = '99';
 const kKeyStarted = '98';
+const kKeyNoSeat = '97';
 
 Uri _appendQuery(Uri uri, Map<String, String> query) {
   final newQuery = Map<String, String>.from(uri.queryParameters);
@@ -140,10 +141,10 @@ class Team extends StatelessWidget {
     BorderSide? border;
     ButtonType buttonType;
     String buttonLabel;
-    Uri href;
+    Uri? href;
     final keys = DynamicView.config.extractKeys(context);
 
-    String? hasAnyKeyMySelf() {
+    String? _hasAnyKeyMySelf() {
       for (final entry in keys.entries) {
         if (entry.value.me) {
           return entry.key;
@@ -152,16 +153,27 @@ class Team extends StatelessWidget {
       return null;
     }
 
-    if (keys.containsKey(kKeyDissolved)) {
+    bool _noSeat() {
+      if (!keys.containsKey(kKeyNoSeat)) {
+        return false;
+      }
+      final key = keys[kKeyNoSeat]!;
+      return key.count > 0;
+    }
+
+    if (keys.containsKey(kKeyDissolved) && keys[kKeyDissolved]!.count > 0) {
       // 用户没有配置再来一局
       if (data.playAgainUrl == null) return const SizedBox();
       buttonType = ButtonType.outlined;
       buttonLabel = "再来一局";
       href = _appendQuery(Uri.parse(data.playAgainUrl!), extraQueries());
-    } else if (keys.containsKey(kKeyStarted)) {
+    } else if (keys.containsKey(kKeyNoSeat) && keys[kKeyNoSeat]!.count > 0) {
+      buttonType = ButtonType.outlined;
+      buttonLabel = "队伍已满";
+    } else if (keys.containsKey(kKeyStarted) && keys[kKeyStarted]!.count > 0) {
       return const SizedBox();
     } else {
-      if (hasAnyKeyMySelf() != null) {
+      if (_hasAnyKeyMySelf() != null) {
         buttonType = ButtonType.outlined;
         border = BorderSide(color: Theme.of(context).primaryColor, width: 0.5);
         buttonLabel = "进入游戏";
@@ -173,7 +185,7 @@ class Team extends StatelessWidget {
     }
 
     void launchGame() async {
-      if (href.scheme == 'http' ||
+      if (href!.scheme == 'http' ||
           href.scheme == 'https' ||
           href.scheme == 'fanbook') {
         DynamicViewHrefNotification(href.toString()).dispatch(context);
@@ -189,7 +201,7 @@ class Team extends StatelessWidget {
     if (buttonType == ButtonType.outlined) {
       return OutlinedButton(
           style: OutlinedButton.styleFrom(side: border),
-          onPressed: launchGame,
+          onPressed: href == null ? null : launchGame,
           child: Text(buttonLabel));
     } else {
       return ElevatedButton(onPressed: launchGame, child: Text(buttonLabel));
@@ -265,11 +277,18 @@ class Team extends StatelessWidget {
           "已开始",
           style: const TextStyleData(color: disabledColor, fontSize: 14),
         ),
-        no: TextData(
-          "组队中",
-          style: TextStyleData(
-              color: Theme.of(context).primaryColor, fontSize: 14),
-        ),
+        no: KeySetData(
+            key: kKeyNoSeat,
+            anyone: true,
+            yes: TextData(
+              "队伍已满",
+              style: const TextStyleData(color: disabledColor, fontSize: 14),
+            ),
+            no: TextData(
+              "组队中",
+              style: TextStyleData(
+                  color: Theme.of(context).primaryColor, fontSize: 14),
+            )),
       ),
     ));
   }
