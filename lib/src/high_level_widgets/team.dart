@@ -11,7 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 part 'team.g.dart';
 
 const kMaxAvatars = 5;
-const kKeyReversedStartFrom = 98;
+const kKeyReversedStartFrom = 97;
 const kKeyDissolved = '99';
 const kKeyStarted = '98';
 const kKeyNoSeat = '97';
@@ -151,14 +151,6 @@ class Team extends StatelessWidget {
         }
       }
       return null;
-    }
-
-    bool _noSeat() {
-      if (!keys.containsKey(kKeyNoSeat)) {
-        return false;
-      }
-      final key = keys[kKeyNoSeat]!;
-      return key.count > 0;
     }
 
     if (keys.containsKey(kKeyDissolved) && keys[kKeyDissolved]!.count > 0) {
