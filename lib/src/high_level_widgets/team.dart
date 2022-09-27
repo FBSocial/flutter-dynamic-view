@@ -143,9 +143,6 @@ class Team extends StatelessWidget {
     String buttonLabel;
     Uri? href;
     final keys = DynamicView.config.extractKeys(context);
-    if (keys.containsKey(kKeyStarted) && keys[kKeyStarted]!.count > 0) {
-      return const SizedBox();
-    }
 
     String? _hasAnyKeyMySelf() {
       for (final entry in keys.entries) {
@@ -156,6 +153,10 @@ class Team extends StatelessWidget {
       return null;
     }
 
+    /// 下面的判断分支顺序不能改变，它们是按照需求状态排列的，需按序判断
+    /// 1. 结束
+    /// 2. 开始
+    /// 3. 已满
     if (keys.containsKey(kKeyDissolved) && keys[kKeyDissolved]!.count > 0) {
       // 用户没有配置再来一局或者 URL 非法
       if (data.playAgainUrl == null) return const SizedBox();
@@ -164,6 +165,8 @@ class Team extends StatelessWidget {
       buttonType = ButtonType.outlined;
       buttonLabel = "再来一局";
       href = _appendQuery(url, extraQueries());
+    } else if (keys.containsKey(kKeyStarted) && keys[kKeyStarted]!.count > 0) {
+      return const SizedBox();
     } else if (keys.containsKey(kKeyNoSeat) && keys[kKeyNoSeat]!.count > 0) {
       buttonType = ButtonType.outlined;
       buttonLabel = "队伍已满";
