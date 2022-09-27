@@ -143,6 +143,9 @@ class Team extends StatelessWidget {
     String buttonLabel;
     Uri? href;
     final keys = DynamicView.config.extractKeys(context);
+    if (keys.containsKey(kKeyStarted) && keys[kKeyStarted]!.count > 0) {
+      return const SizedBox();
+    }
 
     String? _hasAnyKeyMySelf() {
       for (final entry in keys.entries) {
@@ -154,16 +157,16 @@ class Team extends StatelessWidget {
     }
 
     if (keys.containsKey(kKeyDissolved) && keys[kKeyDissolved]!.count > 0) {
-      // 用户没有配置再来一局
+      // 用户没有配置再来一局或者 URL 非法
       if (data.playAgainUrl == null) return const SizedBox();
+      final url = Uri.tryParse(data.playAgainUrl!);
+      if (url == null) return const SizedBox();
       buttonType = ButtonType.outlined;
       buttonLabel = "再来一局";
-      href = _appendQuery(Uri.parse(data.playAgainUrl!), extraQueries());
+      href = _appendQuery(url, extraQueries());
     } else if (keys.containsKey(kKeyNoSeat) && keys[kKeyNoSeat]!.count > 0) {
       buttonType = ButtonType.outlined;
       buttonLabel = "队伍已满";
-    } else if (keys.containsKey(kKeyStarted) && keys[kKeyStarted]!.count > 0) {
-      return const SizedBox();
     } else {
       if (_hasAnyKeyMySelf() != null) {
         buttonType = ButtonType.outlined;
