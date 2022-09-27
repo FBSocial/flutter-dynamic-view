@@ -192,6 +192,7 @@ enum ButtonType {
   text,
   elevated,
   outlined,
+  copy,
 }
 
 enum ButtonSize {

@@ -90,25 +90,29 @@ class BaseWidget {
       switch (type) {
         case ButtonType.raw:
           return InkWell(
-            onTap: () => DynamicView.config.onClick(context, data.href),
+            onTap: () => DynamicView.config.onClick(context, data, data.href),
             child: DynamicView.fromData(data.child!),
           );
         case ButtonType.text:
           return TextButton(
             style: style,
-            onPressed: () => DynamicView.config.onClick(context, data.href),
+            onPressed: () =>
+                DynamicView.config.onClick(context, data, data.href),
             child: DynamicView.fromData(data.child!),
           );
         case ButtonType.elevated:
           return ElevatedButton(
             style: style,
-            onPressed: () => DynamicView.config.onClick(context, data.href),
+            onPressed: () =>
+                DynamicView.config.onClick(context, data, data.href),
             child: DynamicView.fromData(data.child!),
           );
         case ButtonType.outlined:
+        case ButtonType.copy:
           return OutlinedButton(
             style: style,
-            onPressed: () => DynamicView.config.onClick(context, data.href),
+            onPressed: () =>
+                DynamicView.config.onClick(context, data, data.href),
             child: DynamicView.fromData(data.child!),
           );
       }

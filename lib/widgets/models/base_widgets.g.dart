@@ -212,6 +212,7 @@ const _$ButtonTypeEnumMap = {
   ButtonType.text: 'text',
   ButtonType.elevated: 'elevated',
   ButtonType.outlined: 'outlined',
+  ButtonType.copy: 'copy',
 };
 
 const _$ButtonSizeEnumMap = {
