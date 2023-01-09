@@ -106,8 +106,9 @@ class ChannelNameData extends WidgetData {
 class MarkdownData extends WidgetData {
   final String data;
   final bool? shrinkWrap;
+  final TextStyleData? style;
 
-  MarkdownData(this.data, {this.shrinkWrap})
+  MarkdownData(this.data, {this.shrinkWrap, this.style})
       : super(FanbookWidgetTag.markdown.name);
 
   factory MarkdownData.fromJson(Map<String, dynamic> json) =>

@@ -90,6 +90,9 @@ Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
 MarkdownData _$MarkdownDataFromJson(Map<String, dynamic> json) => MarkdownData(
       json['data'] as String,
       shrinkWrap: json['shrinkWrap'] as bool?,
+      style: json['style'] == null
+          ? null
+          : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
     )
       ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?)
@@ -110,5 +113,6 @@ Map<String, dynamic> _$MarkdownDataToJson(MarkdownData instance) {
   writeNotNull('flex', instance.flex);
   val['data'] = instance.data;
   writeNotNull('shrinkWrap', instance.shrinkWrap);
+  writeNotNull('style', instance.style?.toJson());
   return val;
 }
