@@ -22,12 +22,13 @@ class BaseWidget {
           break;
       }
     }
-
+    print("sdklfjsakdfksjfkldsaj");
     return TextStyle(
       color: data.color,
       fontSize: data.fontSize,
       backgroundColor: data.backgroundColor,
       fontWeight: fontWeight,
+      fontFamilyFallback: ['PingFang SC', 'Heiti SC'],
     );
   }
 
