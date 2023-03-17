@@ -131,6 +131,7 @@ ImageData _$ImageDataFromJson(Map<String, dynamic> json) => ImageData(
       radius: const DoubleOrNullConverter().fromJson(json['radius'] as num?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
+      preview: json['preview'] as bool? ?? false,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$ImageDataToJson(ImageData instance) {
@@ -156,6 +157,7 @@ Map<String, dynamic> _$ImageDataToJson(ImageData instance) {
   writeNotNull(
       'centerSlice', const RectJsonConverter().toJson(instance.centerSlice));
   writeNotNull('radius', const DoubleOrNullConverter().toJson(instance.radius));
+  val['preview'] = instance.preview;
   return val;
 }
 

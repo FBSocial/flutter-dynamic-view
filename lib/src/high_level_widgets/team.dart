@@ -69,9 +69,7 @@ class Team extends StatelessWidget {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style:
-            TextStyle(color: Theme
-                .of(context)
-                .primaryColor, fontSize: 16),
+                TextStyle(color: Theme.of(context).primaryColor, fontSize: 16),
           ), // 用户头像有 2pt 边框，加起来有 12 间隔
           const SizedBox(height: 10), // 玩家头像列表 & 游戏状态
           SizedBox(
@@ -88,11 +86,8 @@ class Team extends StatelessWidget {
             children: [
               AspectRatio(
                 aspectRatio: 470 / 264,
-                child: DynamicView.fromData(ImageData(
-                  data.cover,
-                  fit: BoxFit.cover,
-                  radius: 4,
-                )),
+                child: DynamicView.fromData(ImageData(data.cover,
+                    fit: BoxFit.cover, radius: 4, preview: false)),
               ),
               // 标注文本，例如房间号
               if (data.annotation != null)
@@ -176,9 +171,7 @@ class Team extends StatelessWidget {
     } else {
       if (_hasAnyKeyMySelf() != null) {
         buttonType = ButtonType.outlined;
-        border = BorderSide(color: Theme
-            .of(context)
-            .primaryColor, width: 0.5);
+        border = BorderSide(color: Theme.of(context).primaryColor, width: 0.5);
         buttonLabel = "进入游戏";
       } else {
         buttonType = ButtonType.elevated;
@@ -226,20 +219,19 @@ class Team extends StatelessWidget {
         .extractKeys(context)
         .entries
         .where((e) =>
-    int.parse(e.key) < kKeyReversedStartFrom &&
-        e.value.count > 0 &&
-        e.value.userId != null)
+            int.parse(e.key) < kKeyReversedStartFrom &&
+            e.value.count > 0 &&
+            e.value.userId != null)
         .map((e) => e.value)
         .toList(growable: false);
     final buildAvatar =
-    DynamicView.getBuilder(FanbookWidgetTag.userAvatar.name)!;
+        DynamicView.getBuilder(FanbookWidgetTag.userAvatar.name)!;
     return Wrap(
       spacing: -10,
       children: [
         ...keys
             .take(5)
-            .map((e) =>
-            _avatarWrapper(
+            .map((e) => _avatarWrapper(
                 buildAvatar(UserAvatarData(e.userId!, size: 24))))
             .toList(growable: false),
         if (keys.length > kMaxAvatars)
@@ -248,9 +240,7 @@ class Team extends StatelessWidget {
             height: 24,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
-              color: Theme
-                  .of(context)
-                  .scaffoldBackgroundColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
             ),
             alignment: Alignment.center,
             // 如果不左移 0.5pt，视觉上会没有居中，设计图也是左移了
@@ -259,10 +249,7 @@ class Team extends StatelessWidget {
               child: Text(
                 "+${keys.length - kMaxAvatars}",
                 style: TextStyle(
-                    fontSize: 11, color: Theme
-                    .of(context)
-                    .iconTheme
-                    .color),
+                    fontSize: 11, color: Theme.of(context).iconTheme.color),
               ),
             ),
           )),
@@ -296,9 +283,7 @@ class Team extends StatelessWidget {
             no: TextData(
               "组队中",
               style: TextStyleData(
-                  color: Theme
-                      .of(context)
-                      .primaryColor, fontSize: 14),
+                  color: Theme.of(context).primaryColor, fontSize: 14),
             )),
       ),
     ));

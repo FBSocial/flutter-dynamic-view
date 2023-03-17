@@ -148,6 +148,8 @@ class ImageData extends WidgetData {
   final ImageRepeat? repeat;
   final Rect? centerSlice;
   final double? radius;
+  @JsonKey(defaultValue: false)
+  final bool preview;
 
   ImageData(
     this.src, {
@@ -160,6 +162,7 @@ class ImageData extends WidgetData {
     this.radius,
     EdgeInsets? padding,
     String? flex,
+    required this.preview,
   }) : super(WidgetTag.image.name, padding: padding, flex: flex);
 
   factory ImageData.fromJson(Map<String, dynamic> json) =>
