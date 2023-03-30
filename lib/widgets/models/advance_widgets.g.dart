@@ -12,6 +12,7 @@ UserAvatarData _$UserAvatarDataFromJson(Map<String, dynamic> json) =>
       size: (json['size'] as num?)?.toDouble(),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
+      allowPopupUserInfo: json['allowPopupUserInfo'] as bool? ?? false,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
@@ -29,6 +30,7 @@ Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   writeNotNull('flex', instance.flex);
   val['id'] = instance.id;
   writeNotNull('size', instance.size);
+  val['allowPopupUserInfo'] = instance.allowPopupUserInfo;
   return val;
 }
 
@@ -39,6 +41,7 @@ UserNameData _$UserNameDataFromJson(Map<String, dynamic> json) => UserNameData(
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
+      allowPopupUserInfo: json['allowPopupUserInfo'] as bool? ?? false,
     )..tag = json['tag'] as String;
 
 Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
@@ -56,6 +59,7 @@ Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
   writeNotNull('flex', instance.flex);
   val['id'] = instance.id;
   writeNotNull('style', instance.style?.toJson());
+  val['allowPopupUserInfo'] = instance.allowPopupUserInfo;
   return val;
 }
 

@@ -16,7 +16,6 @@ enum FontWeightData {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class AspectRatioData extends WidgetData {
   final double ratio;
   final WidgetData child;
@@ -45,7 +44,6 @@ class AspectRatioData extends WidgetData {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @ColorJsonConverter()
 class TextStyleData {
   final Color? color;
@@ -85,7 +83,6 @@ class TextStyleData {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class TextData extends WidgetData {
   final String data;
 
@@ -136,7 +133,6 @@ class TextData extends WidgetData {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @AlignmentJsonConverter()
 @RectJsonConverter()
 class ImageData extends WidgetData {
@@ -207,7 +203,6 @@ enum ButtonSize {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @BorderSideConverter()
 class ButtonData extends SingleChildWidget {
   final ButtonType? type;
@@ -248,7 +243,6 @@ class ButtonData extends SingleChildWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @ColorJsonConverter()
 class BorderData {
   final Color? color;
@@ -283,7 +277,6 @@ class BorderData {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @AlignmentJsonConverter()
 @ColorJsonConverter()
 @BoxConstraintsConverter()
@@ -338,7 +331,6 @@ class ContainerData extends SingleChildWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @ColorJsonConverter()
 class DividerData extends WidgetData {
   final double? thickness;

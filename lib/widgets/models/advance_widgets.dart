@@ -12,12 +12,14 @@ part 'advance_widgets.g.dart';
 class UserAvatarData extends WidgetData {
   final String id;
   final double? size;
+  final bool allowPopupUserInfo;
 
   UserAvatarData(
     this.id, {
     this.size,
     EdgeInsets? padding,
     String? flex,
+    this.allowPopupUserInfo = false,
   }) : super(
           FanbookWidgetTag.userAvatar.name,
           padding: padding,
@@ -46,12 +48,14 @@ class UserAvatarData extends WidgetData {
 class UserNameData extends WidgetData {
   final String id;
   final TextStyleData? style;
+  final bool allowPopupUserInfo;
 
   UserNameData(
     this.id, {
     this.style,
     EdgeInsets? padding,
     String? flex,
+    this.allowPopupUserInfo = false,
   }) : super(FanbookWidgetTag.userName.name, padding: padding, flex: flex);
 
   factory UserNameData.fromJson(Map<String, dynamic> json) =>

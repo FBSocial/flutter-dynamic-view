@@ -215,21 +215,3 @@ class DoubleOrNullConverter extends JsonConverter<double?, num?> {
     }
   }
 }
-
-class DoubleConverter extends JsonConverter<double, num> {
-  const DoubleConverter();
-
-  @override
-  double fromJson(num json) {
-    return json.toDouble();
-  }
-
-  @override
-  num toJson(double object) {
-    if (object.toInt() == object) {
-      return object.toInt();
-    } else {
-      return object;
-    }
-  }
-}

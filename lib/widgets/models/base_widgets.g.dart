@@ -8,7 +8,7 @@ part of 'base_widgets.dart';
 
 AspectRatioData _$AspectRatioDataFromJson(Map<String, dynamic> json) =>
     AspectRatioData(
-      ratio: const DoubleConverter().fromJson(json['ratio'] as num),
+      ratio: (json['ratio'] as num).toDouble(),
       child: WidgetData.fromJson(json['child'] as Map<String, dynamic>),
       flex: json['flex'] as String?,
     )
@@ -28,7 +28,7 @@ Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
-  writeNotNull('ratio', const DoubleConverter().toJson(instance.ratio));
+  val['ratio'] = instance.ratio;
   val['child'] = instance.child.toJson();
   return val;
 }

@@ -17,7 +17,7 @@ ScaffoldHeader _$ScaffoldHeaderFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ScaffoldHeaderToJson(ScaffoldHeader instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'template': _$ScaffoldHeaderTemplateEnumMap[instance.template],
+      'template': _$ScaffoldHeaderTemplateEnumMap[instance.template]!,
     };
 
 const _$ScaffoldHeaderTemplateEnumMap = {

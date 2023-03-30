@@ -12,7 +12,6 @@ part 'layouts.g.dart';
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class RowData extends MultiChildrenWidget {
   final MainAxisAlignment? mainAxisAlignment;
   @JsonKey(name: "size")
@@ -59,7 +58,6 @@ class RowData extends MultiChildrenWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class ColumnData extends MultiChildrenWidget {
   final MainAxisAlignment? mainAxisAlignment;
   @JsonKey(name: "size")
@@ -106,7 +104,6 @@ class ColumnData extends MultiChildrenWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class PositionedData extends SingleChildWidget {
   final double? top;
   final double? right;
@@ -152,7 +149,6 @@ class PositionedData extends SingleChildWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 @AlignmentJsonConverter()
 class StackData extends MultiChildrenWidget {
   final Alignment? alignment;
@@ -187,7 +183,6 @@ class StackData extends MultiChildrenWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class GridViewData extends MultiChildrenWidget {
   @JsonKey(name: 'direction')
   final Axis? scrollDirection;
@@ -236,7 +231,6 @@ class GridViewData extends MultiChildrenWidget {
 
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
-@DoubleConverter()
 class WrapData extends MultiChildrenWidget {
   final Axis? direction;
   final WrapAlignment? alignment;
