@@ -48,7 +48,8 @@ class DynamicView {
     WidgetData.widgetDataParser[tag] = parser;
   }
 
-  static DynamicViewBuilder? getBuilder(String tag) => DynamicView._widgetBuilder[tag];
+  static DynamicViewBuilder? getBuilder(String tag) =>
+      DynamicView._widgetBuilder[tag];
 
   static Widget fromMap(Map<String, dynamic> map) {
     return fromData(WidgetData.fromJson(map));
@@ -61,6 +62,13 @@ class DynamicView {
     }
 
     Widget widget = builder(data);
+    if (data.width != null || data.height != null) {
+      widget = SizedBox(
+        width: data.width,
+        height: data.height,
+        child: widget,
+      );
+    }
     if (data.padding != null && data is! ContainerData && data is! ButtonData) {
       widget = Padding(
         padding: data.padding!,

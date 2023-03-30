@@ -76,11 +76,18 @@ abstract class WidgetData {
   EdgeInsets? padding;
 
   String? flex;
+  double? width;
+  double? height;
 
   @JsonKey(ignore: true)
   WidgetData? parent;
 
-  WidgetData(this.tag, {this.padding, this.flex});
+  WidgetData(
+    this.tag, {
+    this.padding,
+    this.flex,
+    this.width,
+  });
 
   factory WidgetData.fromJson(Map<String, dynamic> json) {
     final parser = widgetDataParser[json['tag']];

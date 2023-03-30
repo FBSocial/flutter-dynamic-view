@@ -13,7 +13,10 @@ UserAvatarData _$UserAvatarDataFromJson(Map<String, dynamic> json) =>
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
       allowPopupUserInfo: json['allowPopupUserInfo'] as bool? ?? false,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = (json['width'] as num?)?.toDouble()
+      ..height = (json['height'] as num?)?.toDouble();
 
 Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
   final val = <String, dynamic>{
@@ -28,6 +31,8 @@ Map<String, dynamic> _$UserAvatarDataToJson(UserAvatarData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
   val['id'] = instance.id;
   writeNotNull('size', instance.size);
   val['allowPopupUserInfo'] = instance.allowPopupUserInfo;
@@ -42,7 +47,10 @@ UserNameData _$UserNameDataFromJson(Map<String, dynamic> json) => UserNameData(
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
       allowPopupUserInfo: json['allowPopupUserInfo'] as bool? ?? false,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = (json['width'] as num?)?.toDouble()
+      ..height = (json['height'] as num?)?.toDouble();
 
 Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
   final val = <String, dynamic>{
@@ -57,6 +65,8 @@ Map<String, dynamic> _$UserNameDataToJson(UserNameData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
   val['id'] = instance.id;
   writeNotNull('style', instance.style?.toJson());
   val['allowPopupUserInfo'] = instance.allowPopupUserInfo;
@@ -71,7 +81,10 @@ ChannelNameData _$ChannelNameDataFromJson(Map<String, dynamic> json) =>
           : TextStyleData.fromJson(json['style'] as Map<String, dynamic>),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = (json['width'] as num?)?.toDouble()
+      ..height = (json['height'] as num?)?.toDouble();
 
 Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
   final val = <String, dynamic>{
@@ -86,6 +99,8 @@ Map<String, dynamic> _$ChannelNameDataToJson(ChannelNameData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
   val['id'] = instance.id;
   writeNotNull('style', instance.style?.toJson());
   return val;
@@ -100,7 +115,9 @@ MarkdownData _$MarkdownDataFromJson(Map<String, dynamic> json) => MarkdownData(
     )
       ..tag = json['tag'] as String
       ..padding = edgeInsetsFromJson(json['padding'] as String?)
-      ..flex = json['flex'] as String?;
+      ..flex = json['flex'] as String?
+      ..width = (json['width'] as num?)?.toDouble()
+      ..height = (json['height'] as num?)?.toDouble();
 
 Map<String, dynamic> _$MarkdownDataToJson(MarkdownData instance) {
   final val = <String, dynamic>{
@@ -115,6 +132,8 @@ Map<String, dynamic> _$MarkdownDataToJson(MarkdownData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
   val['data'] = instance.data;
   writeNotNull('shrinkWrap', instance.shrinkWrap);
   writeNotNull('style', instance.style?.toJson());

@@ -20,7 +20,10 @@ RowData _$RowDataFromJson(Map<String, dynamic> json) => RowData(
           : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$RowDataToJson(RowData instance) {
   final val = <String, dynamic>{
@@ -35,6 +38,8 @@ Map<String, dynamic> _$RowDataToJson(RowData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull('mainAxisAlignment',
@@ -81,7 +86,10 @@ ColumnData _$ColumnDataFromJson(Map<String, dynamic> json) => ColumnData(
           ? null
           : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
       flex: json['flex'] as String?,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$ColumnDataToJson(ColumnData instance) {
   final val = <String, dynamic>{
@@ -96,6 +104,8 @@ Map<String, dynamic> _$ColumnDataToJson(ColumnData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull('mainAxisAlignment',
@@ -155,7 +165,9 @@ StackData _$StackDataFromJson(Map<String, dynamic> json) => StackData(
           : TextStyleData.fromJson(json['textStyle'] as Map<String, dynamic>),
     )
       ..tag = json['tag'] as String
-      ..flex = json['flex'] as String?;
+      ..flex = json['flex'] as String?
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$StackDataToJson(StackData instance) {
   final val = <String, dynamic>{
@@ -170,6 +182,8 @@ Map<String, dynamic> _$StackDataToJson(StackData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull(
@@ -196,7 +210,9 @@ GridViewData _$GridViewDataFromJson(Map<String, dynamic> json) => GridViewData(
           .toList(),
     )
       ..tag = json['tag'] as String
-      ..flex = json['flex'] as String?;
+      ..flex = json['flex'] as String?
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$GridViewDataToJson(GridViewData instance) {
   final val = <String, dynamic>{
@@ -211,6 +227,8 @@ Map<String, dynamic> _$GridViewDataToJson(GridViewData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull('direction', _$AxisEnumMap[instance.scrollDirection]);
@@ -251,7 +269,9 @@ WrapData _$WrapDataFromJson(Map<String, dynamic> json) => WrapData(
           .toList(),
     )
       ..tag = json['tag'] as String
-      ..flex = json['flex'] as String?;
+      ..flex = json['flex'] as String?
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$WrapDataToJson(WrapData instance) {
   final val = <String, dynamic>{
@@ -266,6 +286,8 @@ Map<String, dynamic> _$WrapDataToJson(WrapData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull('direction', _$AxisEnumMap[instance.direction]);
@@ -313,7 +335,10 @@ KeySetData _$KeySetDataFromJson(Map<String, dynamic> json) => KeySetData(
       anyone: json['anyone'] as bool?,
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = (json['width'] as num?)?.toDouble()
+      ..height = (json['height'] as num?)?.toDouble();
 
 Map<String, dynamic> _$KeySetDataToJson(KeySetData instance) {
   final val = <String, dynamic>{
@@ -328,6 +353,8 @@ Map<String, dynamic> _$KeySetDataToJson(KeySetData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', instance.width);
+  writeNotNull('height', instance.height);
   writeNotNull('key', instance.key);
   writeNotNull('anyone', instance.anyone);
   writeNotNull('yes', instance.yes?.toJson());

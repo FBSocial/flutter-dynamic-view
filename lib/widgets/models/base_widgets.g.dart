@@ -13,7 +13,9 @@ AspectRatioData _$AspectRatioDataFromJson(Map<String, dynamic> json) =>
       flex: json['flex'] as String?,
     )
       ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+      ..padding = edgeInsetsFromJson(json['padding'] as String?)
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
   final val = <String, dynamic>{
@@ -28,6 +30,8 @@ Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['ratio'] = instance.ratio;
   val['child'] = instance.child.toJson();
   return val;
@@ -78,7 +82,10 @@ TextData _$TextDataFromJson(Map<String, dynamic> json) => TextData(
       maxLines: json['maxLines'] as int?,
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$TextDataToJson(TextData instance) {
   final val = <String, dynamic>{
@@ -93,6 +100,8 @@ Map<String, dynamic> _$TextDataToJson(TextData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   val['data'] = instance.data;
   writeNotNull('style', instance.style?.toJson());
   writeNotNull('textAlign', _$TextAlignEnumMap[instance.textAlign]);
@@ -186,7 +195,10 @@ ButtonData _$ButtonDataFromJson(Map<String, dynamic> json) => ButtonData(
       border: const BorderSideConverter().fromJson(json['border'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
-    )..tag = json['tag'] as String;
+    )
+      ..tag = json['tag'] as String
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$ButtonDataToJson(ButtonData instance) {
   final val = <String, dynamic>{
@@ -201,6 +213,8 @@ Map<String, dynamic> _$ButtonDataToJson(ButtonData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   writeNotNull('child', instance.child?.toJson());
   writeNotNull('type', _$ButtonTypeEnumMap[instance.type]);
   writeNotNull('size', _$ButtonSizeEnumMap[instance.size]);
@@ -301,7 +315,9 @@ DividerData _$DividerDataFromJson(Map<String, dynamic> json) => DividerData(
       flex: json['flex'] as String?,
     )
       ..tag = json['tag'] as String
-      ..padding = edgeInsetsFromJson(json['padding'] as String?);
+      ..padding = edgeInsetsFromJson(json['padding'] as String?)
+      ..width = const DoubleOrNullConverter().fromJson(json['width'] as num?)
+      ..height = const DoubleOrNullConverter().fromJson(json['height'] as num?);
 
 Map<String, dynamic> _$DividerDataToJson(DividerData instance) {
   final val = <String, dynamic>{
@@ -316,6 +332,8 @@ Map<String, dynamic> _$DividerDataToJson(DividerData instance) {
 
   writeNotNull('padding', edgeInsetsToJson(instance.padding));
   writeNotNull('flex', instance.flex);
+  writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
+  writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   writeNotNull(
       'thickness', const DoubleOrNullConverter().toJson(instance.thickness));
   writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
