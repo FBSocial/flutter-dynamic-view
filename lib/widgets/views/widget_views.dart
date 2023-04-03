@@ -62,7 +62,7 @@ class DynamicView {
     }
 
     Widget widget = builder(data);
-    if (data.width != null || data.height != null) {
+    if ((data.width != null || data.height != null) && data is! ContainerData) {
       widget = SizedBox(
         width: data.width,
         height: data.height,
