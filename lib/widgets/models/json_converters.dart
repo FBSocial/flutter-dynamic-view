@@ -46,13 +46,11 @@ class BoxConstraintsConverter extends JsonConverter<BoxConstraints?, String?> {
 
 /// convert flutter [Color] to css-style string
 /// eg. red can be converted to '#ff0000' or 'ffff0000' or ff0000 or ffff0000
-class ColorJsonConverter extends JsonConverter<Color?, String?> {
+class ColorJsonConverter extends JsonConverter<Color, String> {
   const ColorJsonConverter();
 
   @override
-  Color? fromJson(String? json) {
-    if (json == null) return null;
-
+  Color fromJson(String json) {
     json = json.replaceAll('#', '');
     if (json.length == 6) {
       json = 'ff' + json;
@@ -60,12 +58,11 @@ class ColorJsonConverter extends JsonConverter<Color?, String?> {
     if (json.length == 8) {
       return Color(int.parse('0x$json'));
     }
-    return null;
+    throw Exception('[dynamic_view] Invalid color string: $json');
   }
 
   @override
-  String? toJson(Color? object) {
-    if (object == null) return null;
+  String toJson(Color object) {
     // color to hex
     var outData = object.value.toRadixString(16);
     if (object.alpha == 255) {
@@ -80,12 +77,11 @@ class ColorJsonConverter extends JsonConverter<Color?, String?> {
 /// 1. Alignment.centerLeft can be converted to '0,1'
 /// 2. Alignment.center can be converted to '0'
 /// 3. Alignment.bottomRight can be converted to '1'
-class AlignmentJsonConverter extends JsonConverter<Alignment?, String?> {
+class AlignmentJsonConverter extends JsonConverter<Alignment, String> {
   const AlignmentJsonConverter();
 
   @override
-  Alignment? fromJson(String? json) {
-    if (json == null) return null;
+  Alignment fromJson(String json) {
     final values = json.split(',');
     if (values.length == 1) {
       final val = double.parse(values.single);
@@ -96,8 +92,7 @@ class AlignmentJsonConverter extends JsonConverter<Alignment?, String?> {
   }
 
   @override
-  String? toJson(Alignment? object) {
-    if (object == null) return null;
+  String toJson(Alignment object) {
     if (object.x == object.y) {
       return _double2str(object.x);
     } else {

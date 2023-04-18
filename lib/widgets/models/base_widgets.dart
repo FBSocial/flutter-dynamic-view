@@ -279,6 +279,44 @@ class BorderData {
 @DoubleOrNullConverter()
 @AlignmentJsonConverter()
 @ColorJsonConverter()
+class Gradient {
+  final List<Color> colors;
+  final List<double>? stops;
+  final Alignment begin;
+  final Alignment end;
+
+  const Gradient({
+    required this.colors,
+    this.stops = const [0, 1],
+    this.begin = Alignment.centerLeft,
+    this.end = Alignment.centerRight,
+  });
+
+  factory Gradient.fromJson(Map<String, dynamic> json) =>
+      _$GradientFromJson(json);
+
+  Map<String, dynamic> toJson() => _$GradientToJson(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is Gradient &&
+        colors == other.colors &&
+        stops == other.stops &&
+        begin == other.begin &&
+        end == other.end;
+  }
+
+  @override
+  String toString() {
+    return 'Gradient{colors: $colors, stops: $stops, begin: $begin, end: $end}';
+  }
+}
+
+@JsonSerializable(explicitToJson: true, includeIfNull: false)
+@DoubleOrNullConverter()
+@AlignmentJsonConverter()
+@ColorJsonConverter()
 @BoxConstraintsConverter()
 class ContainerData extends SingleChildWidget {
   final double? width;
@@ -287,6 +325,7 @@ class ContainerData extends SingleChildWidget {
   final BorderData? border;
   final Alignment? alignment;
   final Color? backgroundColor;
+  final Gradient? gradient;
   @JsonKey(fromJson: edgeInsetsFromJson, toJson: edgeInsetsToJson)
   final EdgeInsets? margin;
 
@@ -298,6 +337,7 @@ class ContainerData extends SingleChildWidget {
     this.border,
     this.alignment,
     this.backgroundColor,
+    this.gradient,
     this.margin,
     EdgeInsets? padding,
     String? flex,

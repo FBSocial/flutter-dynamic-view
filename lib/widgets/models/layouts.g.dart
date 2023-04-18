@@ -154,8 +154,8 @@ Map<String, dynamic> _$PositionedDataToJson(PositionedData instance) {
 }
 
 StackData _$StackDataFromJson(Map<String, dynamic> json) => StackData(
-      alignment:
-          const AlignmentJsonConverter().fromJson(json['alignment'] as String?),
+      alignment: _$JsonConverterFromJson<String, Alignment>(
+          json['alignment'], const AlignmentJsonConverter().fromJson),
       children: (json['children'] as List<dynamic>)
           .map((e) => WidgetData.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -187,9 +187,23 @@ Map<String, dynamic> _$StackDataToJson(StackData instance) {
   val['children'] = instance.children.map((e) => e.toJson()).toList();
   writeNotNull('textStyle', instance.textStyle?.toJson());
   writeNotNull(
-      'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
+      'alignment',
+      _$JsonConverterToJson<String, Alignment>(
+          instance.alignment, const AlignmentJsonConverter().toJson));
   return val;
 }
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 GridViewData _$GridViewDataFromJson(Map<String, dynamic> json) => GridViewData(
       crossAxisCount: json['crossAxisCount'] as int,

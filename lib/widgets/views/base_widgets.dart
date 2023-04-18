@@ -22,13 +22,12 @@ class BaseWidget {
           break;
       }
     }
-    print("sdklfjsakdfksjfkldsaj");
     return TextStyle(
       color: data.color,
       fontSize: data.fontSize,
       backgroundColor: data.backgroundColor,
       fontWeight: fontWeight,
-      fontFamilyFallback: ['PingFang SC', 'Heiti SC'],
+      fontFamilyFallback: const ['PingFang SC', 'Heiti SC'],
     );
   }
 
@@ -146,6 +145,14 @@ class BaseWidget {
       margin: data.margin,
       decoration: BoxDecoration(
         color: data.backgroundColor,
+        gradient: data.gradient == null
+            ? null
+            : LinearGradient(
+                colors: data.gradient!.colors,
+                stops: data.gradient!.stops,
+                begin: data.gradient!.begin,
+                end: data.gradient!.end,
+              ),
         borderRadius: borderRadius,
         border: border,
       ),

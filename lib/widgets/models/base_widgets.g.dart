@@ -39,9 +39,10 @@ Map<String, dynamic> _$AspectRatioDataToJson(AspectRatioData instance) {
 
 TextStyleData _$TextStyleDataFromJson(Map<String, dynamic> json) =>
     TextStyleData(
-      color: const ColorJsonConverter().fromJson(json['color'] as String?),
-      backgroundColor: const ColorJsonConverter()
-          .fromJson(json['backgroundColor'] as String?),
+      color: _$JsonConverterFromJson<String, Color>(
+          json['color'], const ColorJsonConverter().fromJson),
+      backgroundColor: _$JsonConverterFromJson<String, Color>(
+          json['backgroundColor'], const ColorJsonConverter().fromJson),
       fontSize:
           const DoubleOrNullConverter().fromJson(json['fontSize'] as num?),
       fontWeight:
@@ -57,19 +58,36 @@ Map<String, dynamic> _$TextStyleDataToJson(TextStyleData instance) {
     }
   }
 
-  writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
-  writeNotNull('backgroundColor',
-      const ColorJsonConverter().toJson(instance.backgroundColor));
+  writeNotNull(
+      'color',
+      _$JsonConverterToJson<String, Color>(
+          instance.color, const ColorJsonConverter().toJson));
+  writeNotNull(
+      'backgroundColor',
+      _$JsonConverterToJson<String, Color>(
+          instance.backgroundColor, const ColorJsonConverter().toJson));
   writeNotNull(
       'fontSize', const DoubleOrNullConverter().toJson(instance.fontSize));
   writeNotNull('fontWeight', _$FontWeightDataEnumMap[instance.fontWeight]);
   return val;
 }
 
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
 const _$FontWeightDataEnumMap = {
   FontWeightData.normal: 'normal',
   FontWeightData.medium: 'medium',
 };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
 
 TextData _$TextDataFromJson(Map<String, dynamic> json) => TextData(
       json['data'] as String,
@@ -132,8 +150,8 @@ ImageData _$ImageDataFromJson(Map<String, dynamic> json) => ImageData(
       width: const DoubleOrNullConverter().fromJson(json['width'] as num?),
       height: const DoubleOrNullConverter().fromJson(json['height'] as num?),
       fit: $enumDecodeNullable(_$BoxFitEnumMap, json['fit']),
-      alignment:
-          const AlignmentJsonConverter().fromJson(json['alignment'] as String?),
+      alignment: _$JsonConverterFromJson<String, Alignment>(
+          json['alignment'], const AlignmentJsonConverter().fromJson),
       repeat: $enumDecodeNullable(_$ImageRepeatEnumMap, json['repeat']),
       centerSlice:
           const RectJsonConverter().fromJson(json['centerSlice'] as String?),
@@ -161,7 +179,9 @@ Map<String, dynamic> _$ImageDataToJson(ImageData instance) {
   writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   writeNotNull('fit', _$BoxFitEnumMap[instance.fit]);
   writeNotNull(
-      'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
+      'alignment',
+      _$JsonConverterToJson<String, Alignment>(
+          instance.alignment, const AlignmentJsonConverter().toJson));
   writeNotNull('repeat', _$ImageRepeatEnumMap[instance.repeat]);
   writeNotNull(
       'centerSlice', const RectJsonConverter().toJson(instance.centerSlice));
@@ -239,7 +259,8 @@ const _$ButtonSizeEnumMap = {
 };
 
 BorderData _$BorderDataFromJson(Map<String, dynamic> json) => BorderData(
-      color: const ColorJsonConverter().fromJson(json['color'] as String?),
+      color: _$JsonConverterFromJson<String, Color>(
+          json['color'], const ColorJsonConverter().fromJson),
       width: const DoubleOrNullConverter().fromJson(json['width'] as num?),
       radius: const DoubleOrNullConverter().fromJson(json['radius'] as num?),
     );
@@ -253,9 +274,45 @@ Map<String, dynamic> _$BorderDataToJson(BorderData instance) {
     }
   }
 
-  writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
+  writeNotNull(
+      'color',
+      _$JsonConverterToJson<String, Color>(
+          instance.color, const ColorJsonConverter().toJson));
   writeNotNull('width', const DoubleOrNullConverter().toJson(instance.width));
   writeNotNull('radius', const DoubleOrNullConverter().toJson(instance.radius));
+  return val;
+}
+
+Gradient _$GradientFromJson(Map<String, dynamic> json) => Gradient(
+      colors: (json['colors'] as List<dynamic>)
+          .map((e) => const ColorJsonConverter().fromJson(e as String))
+          .toList(),
+      stops: (json['stops'] as List<dynamic>?)
+              ?.map((e) => (e as num).toDouble())
+              .toList() ??
+          const [0, 1],
+      begin: json['begin'] == null
+          ? Alignment.centerLeft
+          : const AlignmentJsonConverter().fromJson(json['begin'] as String),
+      end: json['end'] == null
+          ? Alignment.centerRight
+          : const AlignmentJsonConverter().fromJson(json['end'] as String),
+    );
+
+Map<String, dynamic> _$GradientToJson(Gradient instance) {
+  final val = <String, dynamic>{
+    'colors': instance.colors.map(const ColorJsonConverter().toJson).toList(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('stops', instance.stops);
+  val['begin'] = const AlignmentJsonConverter().toJson(instance.begin);
+  val['end'] = const AlignmentJsonConverter().toJson(instance.end);
   return val;
 }
 
@@ -271,10 +328,13 @@ ContainerData _$ContainerDataFromJson(Map<String, dynamic> json) =>
       border: json['border'] == null
           ? null
           : BorderData.fromJson(json['border'] as Map<String, dynamic>),
-      alignment:
-          const AlignmentJsonConverter().fromJson(json['alignment'] as String?),
-      backgroundColor: const ColorJsonConverter()
-          .fromJson(json['backgroundColor'] as String?),
+      alignment: _$JsonConverterFromJson<String, Alignment>(
+          json['alignment'], const AlignmentJsonConverter().fromJson),
+      backgroundColor: _$JsonConverterFromJson<String, Color>(
+          json['backgroundColor'], const ColorJsonConverter().fromJson),
+      gradient: json['gradient'] == null
+          ? null
+          : Gradient.fromJson(json['gradient'] as Map<String, dynamic>),
       margin: edgeInsetsFromJson(json['margin'] as String?),
       padding: edgeInsetsFromJson(json['padding'] as String?),
       flex: json['flex'] as String?,
@@ -300,9 +360,14 @@ Map<String, dynamic> _$ContainerDataToJson(ContainerData instance) {
       const BoxConstraintsConverter().toJson(instance.constraints));
   writeNotNull('border', instance.border?.toJson());
   writeNotNull(
-      'alignment', const AlignmentJsonConverter().toJson(instance.alignment));
-  writeNotNull('backgroundColor',
-      const ColorJsonConverter().toJson(instance.backgroundColor));
+      'alignment',
+      _$JsonConverterToJson<String, Alignment>(
+          instance.alignment, const AlignmentJsonConverter().toJson));
+  writeNotNull(
+      'backgroundColor',
+      _$JsonConverterToJson<String, Color>(
+          instance.backgroundColor, const ColorJsonConverter().toJson));
+  writeNotNull('gradient', instance.gradient?.toJson());
   writeNotNull('margin', edgeInsetsToJson(instance.margin));
   return val;
 }
@@ -310,7 +375,8 @@ Map<String, dynamic> _$ContainerDataToJson(ContainerData instance) {
 DividerData _$DividerDataFromJson(Map<String, dynamic> json) => DividerData(
       thickness:
           const DoubleOrNullConverter().fromJson(json['thickness'] as num?),
-      color: const ColorJsonConverter().fromJson(json['color'] as String?),
+      color: _$JsonConverterFromJson<String, Color>(
+          json['color'], const ColorJsonConverter().fromJson),
       vertical: json['vertical'] as bool?,
       flex: json['flex'] as String?,
     )
@@ -336,7 +402,10 @@ Map<String, dynamic> _$DividerDataToJson(DividerData instance) {
   writeNotNull('height', const DoubleOrNullConverter().toJson(instance.height));
   writeNotNull(
       'thickness', const DoubleOrNullConverter().toJson(instance.thickness));
-  writeNotNull('color', const ColorJsonConverter().toJson(instance.color));
+  writeNotNull(
+      'color',
+      _$JsonConverterToJson<String, Color>(
+          instance.color, const ColorJsonConverter().toJson));
   writeNotNull('vertical', instance.vertical);
   return val;
 }
