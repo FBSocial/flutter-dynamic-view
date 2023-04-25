@@ -84,7 +84,7 @@ class DynamicView {
     }
     if (data is MultiChildrenWidget) {
       if (data.textStyle != null) {
-        widget = DefaultTextStyle(
+        widget = DefaultTextStyle.merge(
           style: BaseWidget.textStyleFrom(data.textStyle)!,
           child: widget,
         );
