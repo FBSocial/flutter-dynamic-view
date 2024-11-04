@@ -131,6 +131,45 @@ class TextData extends WidgetData {
   }
 }
 
+class TimeDownData extends WidgetData {
+  final String startTime;
+
+  final String? endTime;
+
+
+  TimeDownData(
+      this.startTime, {
+        this.endTime,
+      }) : super(WidgetTag.timeDown.name);
+
+  factory TimeDownData.fromJson(Map<String, dynamic> json) {
+        final startTime = json['startTime'].toString();
+        final endTime = json['endTime'].toString();
+        return TimeDownData(startTime,endTime:endTime);
+      }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'startTime':startTime,
+      'endTime':endTime,
+    };
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is TimeDownData &&
+        startTime == other.startTime &&
+        endTime == other.endTime;
+  }
+
+  @override
+  String toString() {
+    return 'TimeDown{startTime: $startTime, endTime: $endTime}';
+  }
+}
+
 @JsonSerializable(explicitToJson: true, includeIfNull: false)
 @DoubleOrNullConverter()
 @AlignmentJsonConverter()
